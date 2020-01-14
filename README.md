@@ -171,22 +171,32 @@
     Edit your schema at /Users/geoseong/Documents/Meetup/AWS/AWSKRUG/communityday/JustApp/amplify/backend/api/justapp/schema.graphql or place .graphql files in a directory at /Users/geoseong/Documents/Meetup/AWS/AWSKRUG/communityday/JustApp/amplify/backend/api/justapp/schema
     Successfully added resource justapp locally
     ```
-3. amplify mocking and testing
+1. amplify mocking and testing
    - insert some data with using GraphQL's `mutation` query
-4. add code **Amplify's** `API` Moule in expo
-   - import `API`
-5. expo mock & amplify api 써보기
+2. add code **Amplify's** `API` Moule in expo
+   - amplify add codegen
+      ```
+      $ amplify add codegen
+
+      ? Choose the code generation language target "javascript"
+      ? Enter the file name pattern of graphql queries, mutations and subscriptions "src/graphql/**/*.js"
+      ? Do you want to generate/update all possible GraphQL operations - queries, mutations and subscriptions "Yes"
+      ? Enter maximum statement depth [increase from default if your schema is deeply nested] "2"
+      ✔ Generated GraphQL operations successfully and saved at src/graphql
+      ```
+   - import `API` and code with created `AppSync API`
+3. expo mock & amplify api 써보기
    - amplify mock이 켜진 상태로 localhost api와 통신하기
-6. expo에서 amplify api 수정하기
+4. expo에서 amplify api 수정하기
    - mutation, subscription 코딩
-7. amplify add auth
+5. amplify add auth
    - schema.graphql에서 @auth 추가하기
-8. amplify update api
+6. amplify update api
    - Change authorization type `API Key` -> `Amazon Cognito User Pool`
    - 변경된 schema update하기
-9. amplify mock
+7. amplify mock
    - auth 타입에서 cognito_user_pool 추가된 것 확인하기
-10. expo에서 amplify auth import해서 코딩하기
+8.  expo에서 amplify auth import해서 코딩하기
    - withAuthenticator 사용
    - (가능하면) I18n util써 보기
 11. amplify add storage
