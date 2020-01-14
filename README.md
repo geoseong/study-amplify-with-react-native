@@ -11,7 +11,7 @@
    2. enter the project's `name` and `slug`. you can type `Tab` and `Shift + Tab` key to switch the cursor
    3. type `Y` to install expo project's dependency
 
-    ```sh
+    ```
     ? Choose a template: (Use arrow keys)
       ----- Managed workflow -----
     ❯ blank                 a minimal app as clean as an empty canvas 
@@ -70,54 +70,138 @@
       expo start --android
       ```
 1. amplify init
-    ```sh
+    ```
     $ amplify init
+
+    Scanning for plugins...
+    Plugin scan successful
+    Note: It is recommended to run this command from the root of your app directory
+    ? Enter a name for the project "JustApp"
+    ? Enter a name for the environment "dev"
+    ? Choose your default editor: "Visual Studio Code"
+    ? Choose the type of app that you're building javascript
+    Please tell us about your project
+    ? What javascript framework are you using "react-native"
+    ? Source Directory Path:  "src"
+    ? Distribution Directory Path: "/" (just Enter)
+    ? Build Command:  "npm run-script build" (just Enter)
+    ? Start Command: "npm run-script start" (just Enter)
+    Using default provider  awscloudformation
+
+    For more information on AWS Profiles, see:
+    https://docs.aws.amazon.com/cli/latest/userguide/cli-multiple-profiles.html
+
+    ? Do you want to use an AWS profile? (Y/n) "Y"
+
+    ? Please choose the profile you want to use "{your profile name}"
+    Adding backend environment dev to AWS Amplify Console app: d2egeeayc0vvkl
+    ⠦ Initializing project in the cloud...
+
+    CREATE_IN_PROGRESS amplify-justapp-dev-234651 AWS::CloudFormation::Stack Tue Jan 14 2020 23:46:54 GMT+0900 (Korean Standard Time) User Initiated             
+    CREATE_IN_PROGRESS DeploymentBucket           AWS::S3::Bucket            Tue Jan 14 2020 23:46:57 GMT+0900 (Korean Standard Time) 
+    
+    ...
+
+    ✔ Initialized provider successfully.
+    Initialized your environment successfully.
+
+    Your project has been successfully initialized and connected to the cloud!
     ```
 2. amplify add api
    - authorization type: `API key`
    - edit `schema.graphql` with `@model` directive
-    ```sh
+    ```
     $ amplify add api
 
-    ? Please select from one of the below mentioned services (Use arrow keys)
-    ❯ GraphQL
-      REST
+    ? Please select from one of the below mentioned services: GraphQL
+    ? Provide API name: "justapp"
+    ? Choose the default authorization type for the API "API key"
+    ? Enter a description for the API key: ""
+    ? After how many days from now the API key should expire (1-365): "7"
+    ? Do you want to configure advanced settings for the GraphQL API "No, I am done."
+    ? Do you have an annotated GraphQL schema? "No"
+    ? Do you want a guided schema creation? "Yes"
+    ? What best describes your project: "One-to-many relationship (e.g., “Blogs” with “Posts” and “Comments”)"
+    ? Do you want to edit the schema now? (Y/n) "Y"
 
-    ? Please select from one of the below mentioned services GraphQL
-    ? Provide API name: myNotesApi
-    ? Choose an authorization type for the API (Use arrow keys)
-    ❯ API key
-      Amazon Cognito User Pool
+    Please edit the file in your editor: "/Users/{your path}/JustApp/amplify/backend/api/justapp/schema.graphql"
+
+    ? Press enter to continue 
+    ```
+
+  - schema.graphql
+    ```gql
+    type S3Object {
+      bucket: String!
+      region: String!
+      key: String!
+    }
+
+    type Post @model {
+      id: ID!
+      title: String!
+      content: String!
+      image: S3Object!
+      like: Boolean!
+      comments: [Comment] @connection(name: "PostComments", sortField: "createdAt")
+      createdAt: AWSTimestamp!
+      updatedAt: AWSTimestamp!
+    }
+
+    type Comment @model {
+      id: ID!
+      content: String
+      post: Post @connection(name: "PostComments", sortField: "createdAt")
+      createdAt: AWSTimestamp!
+      updatedAt: AWSTimestamp!
+    }
+
+    ```
+
+  - press `Enter` Key in cli and creating `API`'s step continues...
+    ```
+    The following types do not have '@auth' enabled. Consider using @auth with @model
+         - Blog
+         - Post
+         - Comment
+    Learn more about @auth here: https://aws-amplify.github.io/docs/cli-toolchain/graphql#auth 
+
+    GraphQL schema compiled successfully.
+
+    Edit your schema at /Users/geoseong/Documents/Meetup/AWS/AWSKRUG/communityday/JustApp/amplify/backend/api/justapp/schema.graphql or place .graphql files in a directory at /Users/geoseong/Documents/Meetup/AWS/AWSKRUG/communityday/JustApp/amplify/backend/api/justapp/schema
+    Successfully added resource justapp locally
     ```
 3. amplify mocking and testing
    - insert some data with using GraphQL's `mutation` query
 4. add code **Amplify's** `API` Moule in expo
    - import `API`
-1. expo mock & amplify api 써보기
+5. expo mock & amplify api 써보기
    - amplify mock이 켜진 상태로 localhost api와 통신하기
-1. expo에서 amplify api 수정하기
+6. expo에서 amplify api 수정하기
    - mutation, subscription 코딩
-1. amplify add auth
+7. amplify add auth
    - schema.graphql에서 @auth 추가하기
+8. amplify update api
+   - Change authorization type `API Key` -> `Amazon Cognito User Pool`
    - 변경된 schema update하기
-1. amplify mock
+9. amplify mock
    - auth 타입에서 cognito_user_pool 추가된 것 확인하기
-1. expo에서 amplify auth import해서 코딩하기
+10. expo에서 amplify auth import해서 코딩하기
    - withAuthenticator 사용
    - (가능하면) I18n util써 보기
-1. amplify add storage
+11. amplify add storage
    - schema.graphql에서 S3Object 타입 추가하기
    - 변경된 schema update하기
-1. expo에서 amplify storage import해서 코딩하기
+11. expo에서 amplify storage import해서 코딩하기
    - expo install expo-image-picker 한 이후 코딩
-1. 자기 id가 코멘트에 언급되었는지(좋아요가 눌렸는지) subscription으로 확인하기
+12. 자기 id가 코멘트에 언급되었는지(좋아요가 눌렸는지) subscription으로 확인하기
    - Amplify's API의 `subscription` query로 코딩하기
-2. amplify mock & expo start
+13. amplify mock & expo start
    - withAuthenticator로 로그인하고 이미지 업로드 해보기
-3. amplify add analytics
+14. amplify add analytics
    - expo에서 analytics import해서 코딩하기
-4. expo start & check analytics on AWS console
-5. amplify delete
+15. expo start & check analytics on AWS console
+16. amplify delete
 
 ## Build Standalone App
 

@@ -1,0 +1,22 @@
+type S3Object {
+  bucket: String!
+  region: String!
+  key: String!
+}
+type Post @model {
+  id: ID!
+  title: String!
+  content: String!
+  image: S3Object!
+  like: Boolean!
+  comments: [Comment] @connection(name: "PostComments", sortField: "createdAt")
+  createdAt: AWSTimestamp!
+  updatedAt: AWSTimestamp!
+}
+type Comment @model {
+  id: ID!
+  content: String
+  post: Post @connection(name: "PostComments", sortField: "createdAt")
+  createdAt: AWSTimestamp!
+  updatedAt: AWSTimestamp!
+}
