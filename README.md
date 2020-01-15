@@ -128,52 +128,51 @@
 
     ? Press enter to continue 
     ```
+   - schema.graphql
+      ```gql
+      type S3Object {
+        bucket: String!
+        region: String!
+        key: String!
+      }
 
-  - schema.graphql
-    ```gql
-    type S3Object {
-      bucket: String!
-      region: String!
-      key: String!
-    }
+      type Post @model {
+        id: ID!
+        title: String!
+        content: String!
+        image: S3Object!
+        like: Boolean!
+        comments: [Comment] @connection(name: "PostComments", sortField: "createdAt")
+        createdAt: AWSTimestamp!
+        updatedAt: AWSTimestamp!
+      }
 
-    type Post @model {
-      id: ID!
-      title: String!
-      content: String!
-      image: S3Object!
-      like: Boolean!
-      comments: [Comment] @connection(name: "PostComments", sortField: "createdAt")
-      createdAt: AWSTimestamp!
-      updatedAt: AWSTimestamp!
-    }
+      type Comment @model {
+        id: ID!
+        content: String
+        post: Post @connection(name: "PostComments", sortField: "createdAt")
+        createdAt: AWSTimestamp!
+        updatedAt: AWSTimestamp!
+      }
 
-    type Comment @model {
-      id: ID!
-      content: String
-      post: Post @connection(name: "PostComments", sortField: "createdAt")
-      createdAt: AWSTimestamp!
-      updatedAt: AWSTimestamp!
-    }
+      ```
 
-    ```
+    - press `Enter` Key in cli and creating `API`'s step continues...
+      ```
+      The following types do not have '@auth' enabled. Consider using @auth with @model
+          - Blog
+          - Post
+          - Comment
+      Learn more about @auth here: https://aws-amplify.github.io/docs/cli-toolchain/graphql#auth 
 
-  - press `Enter` Key in cli and creating `API`'s step continues...
-    ```
-    The following types do not have '@auth' enabled. Consider using @auth with @model
-         - Blog
-         - Post
-         - Comment
-    Learn more about @auth here: https://aws-amplify.github.io/docs/cli-toolchain/graphql#auth 
+      GraphQL schema compiled successfully.
 
-    GraphQL schema compiled successfully.
-
-    Edit your schema at /Users/geoseong/Documents/Meetup/AWS/AWSKRUG/communityday/JustApp/amplify/backend/api/justapp/schema.graphql or place .graphql files in a directory at /Users/geoseong/Documents/Meetup/AWS/AWSKRUG/communityday/JustApp/amplify/backend/api/justapp/schema
-    Successfully added resource justapp locally
-    ```
-1. amplify mocking and testing
+      Edit your schema at /Users/{your path}/JustApp/amplify/backend/api/justapp/schema.graphql or place .graphql files in a directory at /Users/{your path}/JustApp/amplify/backend/api/justapp/schema
+      Successfully added resource justapp locally
+      ```
+3. amplify mocking and testing
    - insert some data with using GraphQL's `mutation` query
-2. add code **Amplify's** `API` Moule in expo
+4. add code **Amplify's** `API` Moule in expo
    - amplify add codegen
       ```
       $ amplify add codegen
@@ -185,31 +184,39 @@
       ✔ Generated GraphQL operations successfully and saved at src/graphql
       ```
    - import `API` and code with created `AppSync API`
-3. expo mock & amplify api 써보기
+5. expo mock & amplify api 써보기
    - amplify mock이 켜진 상태로 localhost api와 통신하기
-4. expo에서 amplify api 수정하기
+6. expo에서 amplify api 수정하기
    - mutation, subscription 코딩
-5. amplify add auth
+7. amplify add auth
    - schema.graphql에서 @auth 추가하기
-6. amplify update api
+8. amplify update api
    - Change authorization type `API Key` -> `Amazon Cognito User Pool`
    - 변경된 schema update하기
-7. amplify mock
+      ```
+      $ amplify api update
+      $ amplify codegen
+      ```
+9. amplify mock
    - auth 타입에서 cognito_user_pool 추가된 것 확인하기
-8.  expo에서 amplify auth import해서 코딩하기
-   - withAuthenticator 사용
-   - (가능하면) I18n util써 보기
+10. expo에서 amplify auth import해서 코딩하기
+    - withAuthenticator 사용
+    - (가능하면) I18n util써 보기
 11. amplify add storage
-   - schema.graphql에서 S3Object 타입 추가하기
-   - 변경된 schema update하기
-11. expo에서 amplify storage import해서 코딩하기
-   - expo install expo-image-picker 한 이후 코딩
+    - schema.graphql에서 S3Object 타입 추가하기
+    - 변경된 schema update하기
+      ```
+      $ amplify api update
+      $ amplify codegen
+      ```
+12. expo에서 amplify storage import해서 코딩하기
+    - expo install expo-image-picker 한 이후 코딩
 12. 자기 id가 코멘트에 언급되었는지(좋아요가 눌렸는지) subscription으로 확인하기
-   - Amplify's API의 `subscription` query로 코딩하기
+    - Amplify's API의 `subscription` query로 코딩하기
 13. amplify mock & expo start
-   - withAuthenticator로 로그인하고 이미지 업로드 해보기
+    - withAuthenticator로 로그인하고 이미지 업로드 해보기
 14. amplify add analytics
-   - expo에서 analytics import해서 코딩하기
+    - expo에서 analytics import해서 코딩하기
 15. expo start & check analytics on AWS console
 16. amplify delete
 

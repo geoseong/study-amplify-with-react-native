@@ -1,41 +1,22 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getBlog = `query GetBlog($id: ID!) {
-  getBlog(id: $id) {
-    id
-    name
-    posts {
-      nextToken
-    }
-  }
-}
-`;
-export const listBlogs = `query ListBlogs(
-  $filter: ModelBlogFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listBlogs(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      name
-    }
-    nextToken
-  }
-}
-`;
 export const getPost = `query GetPost($id: ID!) {
   getPost(id: $id) {
     id
     title
-    blog {
-      id
-      name
+    content
+    image {
+      bucket
+      region
+      key
     }
+    like
     comments {
       nextToken
     }
+    createdAt
+    updatedAt
   }
 }
 `;
@@ -48,6 +29,10 @@ export const listPosts = `query ListPosts(
     items {
       id
       title
+      content
+      like
+      createdAt
+      updatedAt
     }
     nextToken
   }
@@ -60,7 +45,13 @@ export const getComment = `query GetComment($id: ID!) {
     post {
       id
       title
+      content
+      like
+      createdAt
+      updatedAt
     }
+    createdAt
+    updatedAt
   }
 }
 `;
@@ -73,6 +64,8 @@ export const listComments = `query ListComments(
     items {
       id
       content
+      createdAt
+      updatedAt
     }
     nextToken
   }

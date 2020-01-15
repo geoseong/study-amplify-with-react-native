@@ -1,45 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createBlog = `mutation CreateBlog(
-  $input: CreateBlogInput!
-  $condition: ModelBlogConditionInput
-) {
-  createBlog(input: $input, condition: $condition) {
-    id
-    name
-    posts {
-      nextToken
-    }
-  }
-}
-`;
-export const updateBlog = `mutation UpdateBlog(
-  $input: UpdateBlogInput!
-  $condition: ModelBlogConditionInput
-) {
-  updateBlog(input: $input, condition: $condition) {
-    id
-    name
-    posts {
-      nextToken
-    }
-  }
-}
-`;
-export const deleteBlog = `mutation DeleteBlog(
-  $input: DeleteBlogInput!
-  $condition: ModelBlogConditionInput
-) {
-  deleteBlog(input: $input, condition: $condition) {
-    id
-    name
-    posts {
-      nextToken
-    }
-  }
-}
-`;
 export const createPost = `mutation CreatePost(
   $input: CreatePostInput!
   $condition: ModelPostConditionInput
@@ -47,13 +8,18 @@ export const createPost = `mutation CreatePost(
   createPost(input: $input, condition: $condition) {
     id
     title
-    blog {
-      id
-      name
+    content
+    image {
+      bucket
+      region
+      key
     }
+    like
     comments {
       nextToken
     }
+    createdAt
+    updatedAt
   }
 }
 `;
@@ -64,13 +30,18 @@ export const updatePost = `mutation UpdatePost(
   updatePost(input: $input, condition: $condition) {
     id
     title
-    blog {
-      id
-      name
+    content
+    image {
+      bucket
+      region
+      key
     }
+    like
     comments {
       nextToken
     }
+    createdAt
+    updatedAt
   }
 }
 `;
@@ -81,13 +52,18 @@ export const deletePost = `mutation DeletePost(
   deletePost(input: $input, condition: $condition) {
     id
     title
-    blog {
-      id
-      name
+    content
+    image {
+      bucket
+      region
+      key
     }
+    like
     comments {
       nextToken
     }
+    createdAt
+    updatedAt
   }
 }
 `;
@@ -101,7 +77,13 @@ export const createComment = `mutation CreateComment(
     post {
       id
       title
+      content
+      like
+      createdAt
+      updatedAt
     }
+    createdAt
+    updatedAt
   }
 }
 `;
@@ -115,7 +97,13 @@ export const updateComment = `mutation UpdateComment(
     post {
       id
       title
+      content
+      like
+      createdAt
+      updatedAt
     }
+    createdAt
+    updatedAt
   }
 }
 `;
@@ -129,7 +117,13 @@ export const deleteComment = `mutation DeleteComment(
     post {
       id
       title
+      content
+      like
+      createdAt
+      updatedAt
     }
+    createdAt
+    updatedAt
   }
 }
 `;
