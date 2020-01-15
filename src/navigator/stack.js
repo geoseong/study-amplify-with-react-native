@@ -1,5 +1,14 @@
-import { Main } from '../screen';
-import { createStackNavigator } from 'react-navigation-stack';
+import { CardStyleInterpolators, TransitionSpecs, createStackNavigator } from 'react-navigation-stack';
+import { CreatePost, Main } from '../screen';
+import {
+  Dimensions,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+
+import React from 'react';
 
 /**
  * @name RouteConfigs
@@ -17,9 +26,59 @@ const RouteConfigs = {
     // Optional: Override the `navigationOptions` for the screen
     navigationOptions: ({ navigation }) => {
       return {
-        title: `${navigation.getParam('pagename', 'name')}'s Profile`,
+        // title: `${navigation.getParam('pagename', 'name')}'s Profile`,
+        // header: ({ scene, previous, navigation }) => {
+        //   // const { options } = scene.descriptor;
+        //   // console.log('header', { scene, previous, navigation })
+        //   // const title =
+        //   //   options.headerTitle !== undefined
+        //   //     ? options.headerTitle
+        //   //     : options.title !== undefined
+        //   //     ? options.title
+        //   //     : scene.route.routeName;
+        //   // navigation.goBack
+        //   // return (
+        //   //   <SafeAreaView>
+        //   //     <Text>{navigation.getParam('pagename', 'name')}</Text>
+        //   //   </SafeAreaView>
+        //   // );
+        // },
+        // gestureEnabled: true,
+        // headerLeft: () => {
+        //   return (
+        //     <SafeAreaView>
+        //       <Text>{navigation.getParam('pagename', 'name')}</Text>
+        //     </SafeAreaView>
+        //   );
+        // },
+        // headerLeftContainerStyle: {
+        //   width: '50%',
+        //   backgroundColor: 'orange',
+        // },
+        // headerRight: () => {
+        //   return (
+        //     <SafeAreaView>
+        //       <Text>{`LOGOUT`}</Text>
+        //     </SafeAreaView>
+        //   );
+        // },
+        // headerRightContainerStyle: {
+        //   width: '50%',
+        //   backgroundColor: 'red',
+        //   color: 'white',
+        // },
       };
     },
+  },
+  CreatePost: {
+    screen: CreatePost,
+    // navigationOptions: {
+    //   gestureEnabled: true,
+    //   gestureDirection: 'horizontal',
+    //   gestureResponseDistance: {
+    //     horizontal: Dimensions.get('window').width,
+    //   },
+    // },
   },
 };
 
@@ -51,6 +110,21 @@ const StackNavigatorConfig = {
    * which conflicts with the drawer example gesture
    */
   mode: Platform.OS === 'ios' ? 'modal' : 'card',
+  defaultNavigationOptions: {
+    cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+    headerRight: () => {
+      return (
+        <SafeAreaView>
+          <Text>{`HEADERRIGHT`}</Text>
+        </SafeAreaView>
+      );
+    },
+    headerRightContainerStyle: {
+      width: '50%',
+      backgroundColor: 'red',
+      color: 'white',
+    },
+  },
   // header: ({ scene, previous, navigation }) => {
   //   const { options } = scene.descriptor;
   //   const title =
@@ -59,7 +133,6 @@ const StackNavigatorConfig = {
   //       : options.title !== undefined
   //       ? options.title
   //       : scene.route.routeName;
-
   //   return (
   //     <MyHeader
   //       title={title}
