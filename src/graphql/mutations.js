@@ -15,6 +15,12 @@ export const createPost = `mutation CreatePost(
     }
     likes
     comments {
+      items {
+        id
+        content
+        createdAt
+        updatedAt
+      }
       nextToken
     }
     createdAt
@@ -36,6 +42,12 @@ export const updatePost = `mutation UpdatePost(
     }
     likes
     comments {
+      items {
+        id
+        content
+        createdAt
+        updatedAt
+      }
       nextToken
     }
     createdAt
@@ -57,6 +69,12 @@ export const deletePost = `mutation DeletePost(
     }
     likes
     comments {
+      items {
+        id
+        content
+        createdAt
+        updatedAt
+      }
       nextToken
     }
     createdAt
@@ -74,7 +92,15 @@ export const createComment = `mutation CreateComment(
     post {
       id
       content
+      image {
+        bucket
+        region
+        key
+      }
       likes
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -93,7 +119,15 @@ export const updateComment = `mutation UpdateComment(
     post {
       id
       content
+      image {
+        bucket
+        region
+        key
+      }
       likes
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -112,7 +146,15 @@ export const deleteComment = `mutation DeleteComment(
     post {
       id
       content
+      image {
+        bucket
+        region
+        key
+      }
       likes
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
     }

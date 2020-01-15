@@ -161,7 +161,7 @@
       ```
 3. amplify mocking and testing
    - insert some data with using GraphQL's `mutation` query
-4. amplify framework 설치
+4. install **amplify framework**
     - cli
     ```
     $ yarn add aws-amplify
@@ -181,6 +181,7 @@
    - `/src/navigator`
      - Stack Navigator: `stack.js`
        - Main: **Main.js**
+       - CreatePost: **CreatePost.js**
      - Switch Navigator: `switch.js`
        - AuthLoading: **AuthLoadingScreen.js**
        - Main: **Stack Navigator**
@@ -197,24 +198,37 @@
       ✔ Generated GraphQL operations successfully and saved at src/graphql
       ```
    - import `API` and code with created `AppSync API`
-7. expo mock & amplify api 써보기
-   - amplify mock이 켜진 상태로 localhost api와 통신하기
-8. expo에서 amplify api 수정하기
-   - mutation, subscription 코딩
-9.  amplify add auth
-   - schema.graphql에서 @auth 추가하기
+7. execute `amplify mock` & `expo start`
+   - get connection between `amplify's localhost api` and `expo debugging`
+8. modify `amplify framework's API` code in `expo`
+   - mutation, subscription
+9. re-configure graphql query `maximum statement depth`
+    ```
+    $ amplify configure codegen
+
+    ? Choose the code generation language target javascript
+    ? Enter the file name pattern of graphql queries, mutations and subscriptions src/grap
+    hql/**/*.js
+    ? Enter maximum statement depth [increase from default if your schema is deeply nested
+    ] 3
+
+    $ amplify codegen
+    ✔ Generated GraphQL operations successfully and saved at src/graphql
+    ```
+10. amplify add auth
+   - add `@auth` directive in `amplify/backend/api/justapp/schema.graphql`
 11. amplify update api
    - Change authorization type `API Key` -> `Amazon Cognito User Pool`
-   - 변경된 schema update하기
+   - execute updated schema to type Amplify CLI
       ```
       $ amplify api update
       $ amplify codegen
       ```
 12. amplify mock
-   - auth 타입에서 cognito_user_pool 추가된 것 확인하기
-13. expo에서 amplify auth import해서 코딩하기
-    - withAuthenticator 사용
-    - (가능하면) I18n util써 보기
+   - check added `cognito_user_pool` Auth Type in Amplify's API Mock console
+13. import Amplify's `Auth` module
+    - using `withAuthenticator`
+    - (if possible) use `I18n` util
 14. amplify add storage
     - schema.graphql에서 S3Object 타입 추가하기
     - 변경된 schema update하기

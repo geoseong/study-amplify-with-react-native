@@ -1,3 +1,4 @@
+import { AddBtn, Post } from '../component';
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import {
   Button,
@@ -8,18 +9,22 @@ import {
   View,
 } from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { onCreatePost, onDeletePost, onUpdatePost } from '../graphql/subscriptions';
+import {
+  onCreatePost,
+  onDeletePost,
+  onUpdatePost,
+} from '../graphql/subscriptions';
 
-import { Post } from '../component';
 import { listPosts } from '../graphql/queries';
 import styles from '../style';
 
 const onLoadList = async () => {
   const postList = await API.graphql(graphqlOperation(listPosts));
   console.log(postList);
-}
+};
 
 const Main = props => {
+  const { navigation } = props;
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     API.graphql(graphqlOperation(listPosts)).then(postList => {
@@ -34,22 +39,20 @@ const Main = props => {
    * @description Mock does not yet support the new WebSocket based subscriptions
    * @reference https://github.com/aws-amplify/amplify-cli/issues/2935#issuecomment-563372044
    */
-  useEffect(() => {
-    const subscription = API.graphql(
-      graphqlOperation(onCreatePost)
-    ).subscribe({
-      next: (postData) => console.log(postData)
-    });
-    return () => {
-      if (subscription) {
-        subscription.unsubscribe();
-      }
-    }
-  }, [])
+  // useEffect(() => {
+  //   const subscription = API.graphql(graphqlOperation(onCreatePost)).subscribe({
+  //     next: postData => console.log(postData),
+  //   });
+  //   return () => {
+  //     if (subscription) {
+  //       subscription.unsubscribe();
+  //     }
+  //   };
+  // }, []);
   console.log('---posts', posts);
   return (
     <>
-      <StatusBar barStyle='dark-content' />
+      {/* <StatusBar barStyle='dark-content' /> */}
       <SafeAreaView>
         <ScrollView
           contentInsetAdjustmentBehavior='automatic'
@@ -69,6 +72,7 @@ const Main = props => {
             />
           ))}
         </ScrollView>
+        <AddBtn navigation={navigation} />
       </SafeAreaView>
     </>
   );

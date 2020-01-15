@@ -12,6 +12,12 @@ export const getPost = `query GetPost($id: ID!) {
     }
     likes
     comments {
+      items {
+        id
+        content
+        createdAt
+        updatedAt
+      }
       nextToken
     }
     createdAt
@@ -28,7 +34,15 @@ export const listPosts = `query ListPosts(
     items {
       id
       content
+      image {
+        bucket
+        region
+        key
+      }
       likes
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -43,7 +57,15 @@ export const getComment = `query GetComment($id: ID!) {
     post {
       id
       content
+      image {
+        bucket
+        region
+        key
+      }
       likes
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -61,6 +83,13 @@ export const listComments = `query ListComments(
     items {
       id
       content
+      post {
+        id
+        content
+        likes
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }

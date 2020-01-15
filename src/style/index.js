@@ -46,12 +46,20 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
   },
+  contentCenter: {
+    justifyContent: 'center',
+  },
   contentBetweenAlignCenter:{
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   flexEnd: {
     justifyContent: 'flex-end',
+  },
+  bottomFix: {
+    position: 'absolute',
+    bottom: 10,
+    left: 0,
   },
   pl1: {
     paddingLeft: 5,

@@ -1,8 +1,9 @@
 import { API, graphqlOperation } from 'aws-amplify';
-import { FormattedDate, Like } from './';
 import { Image, Text, View } from 'react-native';
 import React, { useState } from 'react';
 
+import { FormattedDate } from './FormattedDate';
+import { Like } from './Like';
 import styles from '../style';
 import { updatePost } from '../graphql/mutations';
 

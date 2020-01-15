@@ -12,6 +12,12 @@ export const onCreatePost = `subscription OnCreatePost {
     }
     likes
     comments {
+      items {
+        id
+        content
+        createdAt
+        updatedAt
+      }
       nextToken
     }
     createdAt
@@ -30,6 +36,12 @@ export const onUpdatePost = `subscription OnUpdatePost {
     }
     likes
     comments {
+      items {
+        id
+        content
+        createdAt
+        updatedAt
+      }
       nextToken
     }
     createdAt
@@ -48,6 +60,12 @@ export const onDeletePost = `subscription OnDeletePost {
     }
     likes
     comments {
+      items {
+        id
+        content
+        createdAt
+        updatedAt
+      }
       nextToken
     }
     createdAt
@@ -62,7 +80,15 @@ export const onCreateComment = `subscription OnCreateComment {
     post {
       id
       content
+      image {
+        bucket
+        region
+        key
+      }
       likes
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -78,7 +104,15 @@ export const onUpdateComment = `subscription OnUpdateComment {
     post {
       id
       content
+      image {
+        bucket
+        region
+        key
+      }
       likes
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -94,7 +128,15 @@ export const onDeleteComment = `subscription OnDeleteComment {
     post {
       id
       content
+      image {
+        bucket
+        region
+        key
+      }
       likes
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
     }
