@@ -1,3 +1,4 @@
+import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import {
   Button,
   SafeAreaView,
@@ -6,42 +7,71 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {useCallback} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { onCreatePost, onDeletePost, onUpdatePost } from '../graphql/subscriptions';
 
+import { Post } from '../component';
+import { listPosts } from '../graphql/queries';
 import styles from '../style';
 
-function onCreate() {
-}
-
-function onDeleteAll() {
-  
-}
-
-async function onQuery() {
-}
-async function onLoadList() {
+const onLoadList = async () => {
+  const postList = await API.graphql(graphqlOperation(listPosts));
+  console.log(postList);
 }
 
 const Main = props => {
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    API.graphql(graphqlOperation(listPosts)).then(postList => {
+      const { listPosts } = postList.data;
+      if (listPosts) {
+        setPosts(listPosts.items);
+      }
+    });
+  }, []);
+  /**
+   * @name subscription
+   * @description Mock does not yet support the new WebSocket based subscriptions
+   * @reference https://github.com/aws-amplify/amplify-cli/issues/2935#issuecomment-563372044
+   */
+  useEffect(() => {
+    const subscription = API.graphql(
+      graphqlOperation(onCreatePost)
+    ).subscribe({
+      next: (postData) => console.log(postData)
+    });
+    return () => {
+      if (subscription) {
+        subscription.unsubscribe();
+      }
+    }
+  }, [])
+  console.log('---posts', posts);
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle='dark-content' />
       <SafeAreaView>
         <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>This is Main Page</Text>
-            </View>
-            <Button title="Add Post" color={`blue`} onPress={onCreate} />
-            <Button title="Get List" color={`green`} onPress={onLoadList} />
-          </View>
+          contentInsetAdjustmentBehavior='automatic'
+          style={styles.scrollView}
+        >
+          {posts.map(post => (
+            <Post
+              key={post.id}
+              id={post.id}
+              bucket={post.image.bucket}
+              region={post.image.region}
+              path={post.image.key}
+              content={post.content}
+              likes={post.likes}
+              setPosts={setPosts}
+              updatedAt={post.updatedAt}
+            />
+          ))}
         </ScrollView>
       </SafeAreaView>
     </>
   );
 };
 
-export {Main};
+export { Main };

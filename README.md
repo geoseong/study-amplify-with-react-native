@@ -54,17 +54,6 @@
     ```sh
     $ yarn add react-navigation-stack @react-native-community/masked-view
     ```
-2. make `/src` folder and coding
-   - `/src/component`
-   - `/src/style`
-   - `/src/screen`
-   - `/src/navigator`
-     - Stack Navigator: `stack.js`
-       - Main: **Main.js**
-     - Switch Navigator: `switch.js`
-       - AuthLoading: **AuthLoadingScreen.js**
-       - Main: **Stack Navigator**
-       - Auth: **Auth.js**
 3. Expo Debugging
       ```sh
       expo start --android
@@ -172,7 +161,31 @@
       ```
 3. amplify mocking and testing
    - insert some data with using GraphQL's `mutation` query
-4. add code **Amplify's** `API` Moule in expo
+4. amplify framework 설치
+    - cli
+    ```
+    $ yarn add aws-amplify
+    $ yarn add aws-amplify-react-native
+    ```
+    - App.js
+    ```js
+    import Amplify from 'aws-amplify';
+    import config from './aws-exports’;
+
+    Amplify.configure(config);
+    ```
+5. make `/src` folder and coding
+   - `/src/component`
+   - `/src/style`
+   - `/src/screen`
+   - `/src/navigator`
+     - Stack Navigator: `stack.js`
+       - Main: **Main.js**
+     - Switch Navigator: `switch.js`
+       - AuthLoading: **AuthLoadingScreen.js**
+       - Main: **Stack Navigator**
+       - Auth: **Auth.js**
+6. add code **Amplify's** `API` Moule in expo
    - amplify add codegen
       ```
       $ amplify add codegen
@@ -184,41 +197,41 @@
       ✔ Generated GraphQL operations successfully and saved at src/graphql
       ```
    - import `API` and code with created `AppSync API`
-5. expo mock & amplify api 써보기
+7. expo mock & amplify api 써보기
    - amplify mock이 켜진 상태로 localhost api와 통신하기
-6. expo에서 amplify api 수정하기
+8. expo에서 amplify api 수정하기
    - mutation, subscription 코딩
-7. amplify add auth
+9.  amplify add auth
    - schema.graphql에서 @auth 추가하기
-8. amplify update api
+11. amplify update api
    - Change authorization type `API Key` -> `Amazon Cognito User Pool`
    - 변경된 schema update하기
       ```
       $ amplify api update
       $ amplify codegen
       ```
-9. amplify mock
+12. amplify mock
    - auth 타입에서 cognito_user_pool 추가된 것 확인하기
-10. expo에서 amplify auth import해서 코딩하기
+13. expo에서 amplify auth import해서 코딩하기
     - withAuthenticator 사용
     - (가능하면) I18n util써 보기
-11. amplify add storage
+14. amplify add storage
     - schema.graphql에서 S3Object 타입 추가하기
     - 변경된 schema update하기
       ```
       $ amplify api update
       $ amplify codegen
       ```
-12. expo에서 amplify storage import해서 코딩하기
+15. expo에서 amplify storage import해서 코딩하기
     - expo install expo-image-picker 한 이후 코딩
-12. 자기 id가 코멘트에 언급되었는지(좋아요가 눌렸는지) subscription으로 확인하기
+16. 자기 id가 코멘트에 언급되었는지(좋아요가 눌렸는지) subscription으로 확인하기
     - Amplify's API의 `subscription` query로 코딩하기
-13. amplify mock & expo start
+17. amplify mock & expo start
     - withAuthenticator로 로그인하고 이미지 업로드 해보기
-14. amplify add analytics
+18. amplify add analytics
     - expo에서 analytics import해서 코딩하기
-15. expo start & check analytics on AWS console
-16. amplify delete
+19. expo start & check analytics on AWS console
+20. amplify delete
 
 ## Build Standalone App
 

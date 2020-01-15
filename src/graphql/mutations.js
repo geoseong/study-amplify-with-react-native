@@ -7,14 +7,13 @@ export const createPost = `mutation CreatePost(
 ) {
   createPost(input: $input, condition: $condition) {
     id
-    title
     content
     image {
       bucket
       region
       key
     }
-    like
+    likes
     comments {
       nextToken
     }
@@ -29,14 +28,13 @@ export const updatePost = `mutation UpdatePost(
 ) {
   updatePost(input: $input, condition: $condition) {
     id
-    title
     content
     image {
       bucket
       region
       key
     }
-    like
+    likes
     comments {
       nextToken
     }
@@ -51,14 +49,13 @@ export const deletePost = `mutation DeletePost(
 ) {
   deletePost(input: $input, condition: $condition) {
     id
-    title
     content
     image {
       bucket
       region
       key
     }
-    like
+    likes
     comments {
       nextToken
     }
@@ -76,9 +73,8 @@ export const createComment = `mutation CreateComment(
     content
     post {
       id
-      title
       content
-      like
+      likes
       createdAt
       updatedAt
     }
@@ -96,9 +92,8 @@ export const updateComment = `mutation UpdateComment(
     content
     post {
       id
-      title
       content
-      like
+      likes
       createdAt
       updatedAt
     }
@@ -116,9 +111,8 @@ export const deleteComment = `mutation DeleteComment(
     content
     post {
       id
-      title
       content
-      like
+      likes
       createdAt
       updatedAt
     }

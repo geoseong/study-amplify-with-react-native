@@ -4,14 +4,13 @@
 export const onCreatePost = `subscription OnCreatePost {
   onCreatePost {
     id
-    title
     content
     image {
       bucket
       region
       key
     }
-    like
+    likes
     comments {
       nextToken
     }
@@ -23,14 +22,13 @@ export const onCreatePost = `subscription OnCreatePost {
 export const onUpdatePost = `subscription OnUpdatePost {
   onUpdatePost {
     id
-    title
     content
     image {
       bucket
       region
       key
     }
-    like
+    likes
     comments {
       nextToken
     }
@@ -42,14 +40,13 @@ export const onUpdatePost = `subscription OnUpdatePost {
 export const onDeletePost = `subscription OnDeletePost {
   onDeletePost {
     id
-    title
     content
     image {
       bucket
       region
       key
     }
-    like
+    likes
     comments {
       nextToken
     }
@@ -64,9 +61,8 @@ export const onCreateComment = `subscription OnCreateComment {
     content
     post {
       id
-      title
       content
-      like
+      likes
       createdAt
       updatedAt
     }
@@ -81,9 +77,8 @@ export const onUpdateComment = `subscription OnUpdateComment {
     content
     post {
       id
-      title
       content
-      like
+      likes
       createdAt
       updatedAt
     }
@@ -98,9 +93,8 @@ export const onDeleteComment = `subscription OnDeleteComment {
     content
     post {
       id
-      title
       content
-      like
+      likes
       createdAt
       updatedAt
     }

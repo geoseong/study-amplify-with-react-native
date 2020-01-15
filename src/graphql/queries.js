@@ -4,14 +4,13 @@
 export const getPost = `query GetPost($id: ID!) {
   getPost(id: $id) {
     id
-    title
     content
     image {
       bucket
       region
       key
     }
-    like
+    likes
     comments {
       nextToken
     }
@@ -28,9 +27,8 @@ export const listPosts = `query ListPosts(
   listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      title
       content
-      like
+      likes
       createdAt
       updatedAt
     }
@@ -44,9 +42,8 @@ export const getComment = `query GetComment($id: ID!) {
     content
     post {
       id
-      title
       content
-      like
+      likes
       createdAt
       updatedAt
     }

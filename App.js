@@ -1,17 +1,14 @@
-// import { Text, View } from 'react-native';
-
+import Amplify from 'aws-amplify';
 import React from 'react';
 import SwitchNav from './src/navigator/switch';
+import config from './src/aws-exports';
 import { createAppContainer } from 'react-navigation';
+
+Amplify.configure(config);
 
 const AppContainer = createAppContainer(SwitchNav);
 
-export default AppContainer;
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <Text>Open up App.js to start working on your app!</Text>
-//     </View>
-//   );
-// }
+global.Buffer = global.Buffer || require('buffer').Buffer
 window.LOG_LEVEL = 'DEBUG';
+
+export default AppContainer;
