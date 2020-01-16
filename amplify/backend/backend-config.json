@@ -7,14 +7,27 @@
 				"authConfig": {
 					"additionalAuthenticationProviders": [],
 					"defaultAuthentication": {
-						"authenticationType": "API_KEY",
-						"apiKeyConfig": {
-							"description": "",
-							"apiKeyExpirationDays": 7
+						"authenticationType": "AMAZON_COGNITO_USER_POOLS",
+						"userPoolConfig": {
+							"userPoolId": "authjustappf8f30b2f"
 						}
 					}
 				}
 			}
+		}
+	},
+	"auth": {
+		"justappf8f30b2f": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"customAuth": false
+		}
+	},
+	"storage": {
+		"justappstorage": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
 		}
 	}
 }

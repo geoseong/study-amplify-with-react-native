@@ -14,7 +14,7 @@ const SubmitBtn = ({ submitEvt }) => {
   return (
     <>
       <TouchableOpacity onPress={submitEvt}>
-        <Text>ADD!</Text>
+        <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#2684FF' }}>ADD!</Text>
       </TouchableOpacity>
     </>
   );

@@ -8,7 +8,7 @@ const Like = ({ id, likes, setLike }) => {
     <>
       <View style={[styles.pl1, styles.pr1]}>
         <TouchableOpacity style={{}} onPress={setLike}>
-          <Text>Like</Text>
+          <Text style={{ color: 'red', fontWeight: 'bold' }}>Like</Text>
         </TouchableOpacity>
       </View>
     </>

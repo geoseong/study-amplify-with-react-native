@@ -9,6 +9,7 @@ import {SafeAreaView, ScrollView, StatusBar, Text, View} from 'react-native';
 
 import React from 'react';
 import styles from '../style';
+import { withAuthenticator } from 'aws-amplify-react-native';
 
 const Auth = props => {
   return (
@@ -33,4 +34,5 @@ const Auth = props => {
   );
 };
 
-export {Auth};
+const HoCAuth = withAuthenticator(Auth)
+export { HoCAuth as Auth };

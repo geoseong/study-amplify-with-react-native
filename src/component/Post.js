@@ -1,6 +1,6 @@
-import { API, graphqlOperation } from 'aws-amplify';
+import { API, Storage, graphqlOperation } from 'aws-amplify';
 import { Image, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { FormattedDate } from './FormattedDate';
 import { Like } from './Like';
@@ -9,7 +9,7 @@ import { updatePost } from '../graphql/mutations';
 
 const updateSpecificPost = post => {
   // setPosts
-}
+};
 const Post = ({
   id,
   bucket,
@@ -17,10 +17,11 @@ const Post = ({
   path,
   content,
   likes,
+  author,
   setPosts,
   updatedAt,
 }) => {
-  const [_likes, setLikes] = useState(likes)
+  const [_likes, setLikes] = useState(likes);
   console.log('Post props', {
     id,
     bucket,
@@ -28,10 +29,18 @@ const Post = ({
     path,
     content,
     likes,
+    author,
     updatedAt,
   });
   // const { bucket, region, path, content, likes, updatedAt } = props;
-
+  const [image, setImage] = useState(null)
+  useEffect(() => {
+    Storage.get(path).then(file => {
+      console.log('---- file', file)
+      setImage(file)
+    }).catch(err => console.warn('---- post error', err))
+  }, [])
+  // console.warn('---- image!', image)
   const setLike = async () => {
     const incrementedLike = {
       id,
@@ -43,20 +52,38 @@ const Post = ({
       }),
     );
     console.log('setLike likeRes', likeRes);
-    setLikes(likeRes.data.updatePost.likes)
+    setLikes(likeRes.data.updatePost.likes);
   };
-
+  
   return (
     <>
-      <View style={styles.sectionContainer}>
-        <Image
+      <View
+        style={[
+          styles.sectionContainer,
+          {
+            borderBottomColor: 'gray',
+            borderStyle: 'solid',
+            borderBottomWidth: 1,
+          },
+        ]}
+      >
+        {image && (<Image
           style={{ width: '100%', height: 100, resizeMode: 'contain' }}
           source={{
             uri: `https://${bucket}.s3.${region}.amazonaws.com/${path}`,
           }}
-        />
-        <View>
+        />)}
+        {/* {image && (<Image
+          style={{ width: '100%', height: 100, resizeMode: 'contain' }}
+          source={{
+            uri: `https://${bucket}.s3.${region}.amazonaws.com/${path}`,
+          }}
+        />)} */}
+        <View style={{ marginVertical: 15 }}>
           <Text>{content}</Text>
+          <View style={{ textAlign: 'right' }}>
+            <FormattedDate date={updatedAt} />
+          </View>
         </View>
         <View style={[styles.flexRow, styles.contentBetweenAlignCenter]}>
           <View style={[styles.flexRow]}>
@@ -64,7 +91,13 @@ const Post = ({
             <Like id={id} likes={_likes} setLike={setLike} />
           </View>
           <View style={{}}>
-            <FormattedDate date={updatedAt} />
+            <Text>
+              Posted by
+              <Text style={{ marginLeft: 5, fontWeight: 'bold' }}>
+                {' '}
+                {author}
+              </Text>
+            </Text>
           </View>
         </View>
       </View>

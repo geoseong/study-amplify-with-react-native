@@ -25,7 +25,7 @@ const InputBoxPost = ({ content = '', setContent }) => {
         <TextInput
           multiline
           style={{ width: '100%', minHeight: 100 }}
-          placeholder='내용을 입력해 주세요!'
+          placeholder={`Please write your content!`}
           onChangeText={onChangeText}
           value={content}
         />

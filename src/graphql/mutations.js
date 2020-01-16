@@ -14,15 +14,7 @@ export const createPost = `mutation CreatePost(
       key
     }
     likes
-    comments {
-      items {
-        id
-        author
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
+    author
     createdAt
     updatedAt
   }
@@ -41,15 +33,7 @@ export const updatePost = `mutation UpdatePost(
       key
     }
     likes
-    comments {
-      items {
-        id
-        author
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
+    author
     createdAt
     updatedAt
   }
@@ -68,96 +52,7 @@ export const deletePost = `mutation DeletePost(
       key
     }
     likes
-    comments {
-      items {
-        id
-        author
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-    createdAt
-    updatedAt
-  }
-}
-`;
-export const createComment = `mutation CreateComment(
-  $input: CreateCommentInput!
-  $condition: ModelCommentConditionInput
-) {
-  createComment(input: $input, condition: $condition) {
-    id
     author
-    post {
-      id
-      content
-      image {
-        bucket
-        region
-        key
-      }
-      likes
-      comments {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    createdAt
-    updatedAt
-  }
-}
-`;
-export const updateComment = `mutation UpdateComment(
-  $input: UpdateCommentInput!
-  $condition: ModelCommentConditionInput
-) {
-  updateComment(input: $input, condition: $condition) {
-    id
-    author
-    post {
-      id
-      content
-      image {
-        bucket
-        region
-        key
-      }
-      likes
-      comments {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    createdAt
-    updatedAt
-  }
-}
-`;
-export const deleteComment = `mutation DeleteComment(
-  $input: DeleteCommentInput!
-  $condition: ModelCommentConditionInput
-) {
-  deleteComment(input: $input, condition: $condition) {
-    id
-    author
-    post {
-      id
-      content
-      image {
-        bucket
-        region
-        key
-      }
-      likes
-      comments {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
     createdAt
     updatedAt
   }

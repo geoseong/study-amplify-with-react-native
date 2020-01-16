@@ -1,5 +1,6 @@
 import * as ImagePicker from 'expo-image-picker';
 
+import Amplify, { API, Auth, Storage, graphqlOperation } from 'aws-amplify';
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -19,6 +20,8 @@ import {
 import { InputBoxPost, SubmitBtn } from '../component';
 import React, { useEffect, useState } from 'react';
 
+import config from '../aws-exports';
+import { createPost } from '../graphql/mutations';
 import styles from '../style';
 
 const getPermissionAsync = async () => {
@@ -33,6 +36,7 @@ const CreatePost = props => {
   const { navigation } = props;
   const [image, setImage] = useState(null);
   const [content, setContent] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
   useEffect(() => {
     getPermissionAsync();
   }, []);
@@ -53,9 +57,59 @@ const CreatePost = props => {
   };
 
   const submitEvt = async () => {
-    console.log('submitEvt', { image, content });
-    /* appsync mutation */
+    const loginUser = await Auth.currentAuthenticatedUser();
+    console.log('## submitEvt', { image, content });
+    let required = []
+    let isError = false
+    if (!image || !image.uri) {
+      isError = true
+      required.push('UPLOAD IMAGE')
+    }
+    if (!content || content.length === 0) {
+      isError = true
+      required.push('WRITE CONTENT')
+    }
+    if (isError) {
+      setErrorMsg('YOU SHOULD ' + required.join(' / ') + ' !!');
+      return
+    }
+    const splittedImgPath = image.uri.split('/');
+    const filename = splittedImgPath[splittedImgPath.length - 1];
+    const imgObj = await fetch(image.uri)
+    const buffer = await imgObj.blob()
+    // const buffer = await imgObj.arrayBuffer()
+    // console.log('!!!!', { buffer })
+    // return
+      // .then(response => response.blob())
+      // .then(Buffer => Storage.put(key, Buffer))
+      // .then(x => console.log('SAVED IMAGE WITH KEY', x) || x)
+      // .catch(err => console.log("IMAGE UPLOAD ERROR", err));
     /* storage putitem */
+    const storagePutRes = await Storage.put(
+      filename,
+      buffer,
+      // {
+      //   // contentType: image.type + '/*',
+      //   contentType: 'image/*',
+      // }
+    );
+    console.log('## submitEvt storagePutRes', storagePutRes);
+    /* appsync mutation */
+    const nowDt = new Date().getTime();
+    const input = {
+      content,
+      image: {
+        bucket: config.aws_user_files_s3_bucket,
+        region: config.aws_project_region,
+        key: filename,
+      },
+      author: loginUser.username,
+      likes: 0,
+      createdAt: nowDt,
+      updatedAt: nowDt,
+    };
+    const postRes = await API.graphql(graphqlOperation(createPost, { input }));
+    console.log('## submitEvt postRes', postRes);
     /* history.back */
     navigation.goBack();
   };
@@ -71,8 +125,6 @@ const CreatePost = props => {
           {/* <Header /> */}
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>ADD POST</Text>
-              {/* <Text style={styles.sectionDescription}>This is Auth Page</Text> */}
               <View
                 style={{
                   flex: 1,
@@ -81,7 +133,7 @@ const CreatePost = props => {
                 }}
               >
                 <TouchableOpacity onPress={pickImage}>
-                  <Text style={styles.chooseImgBtn}>Choose Image</Text>
+                  <Text style={styles.chooseImgBtn}>Upload Image</Text>
                 </TouchableOpacity>
                 {image && (
                   <Image
@@ -102,6 +154,7 @@ const CreatePost = props => {
                   styles.pr1,
                 ]}
               >
+                {errorMsg.length > 0 && <Text style={{ color: 'red', marginRight: 10 }}>{errorMsg}</Text>}
                 <SubmitBtn submitEvt={submitEvt} />
               </View>
             </View>

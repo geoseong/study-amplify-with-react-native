@@ -119,39 +119,20 @@
     ```
    - schema.graphql
       ```gql
-      type S3Object {
-        bucket: String!
-        region: String!
-        key: String!
-      }
-
       type Post @model {
         id: ID!
-        title: String!
         content: String!
-        image: S3Object!
-        like: Boolean!
-        comments: [Comment] @connection(name: "PostComments", sortField: "createdAt")
+        likes: Int!
+        author: String!
         createdAt: AWSTimestamp!
         updatedAt: AWSTimestamp!
       }
-
-      type Comment @model {
-        id: ID!
-        content: String
-        post: Post @connection(name: "PostComments", sortField: "createdAt")
-        createdAt: AWSTimestamp!
-        updatedAt: AWSTimestamp!
-      }
-
       ```
 
     - press `Enter` Key in cli and creating `API`'s step continues...
       ```
       The following types do not have '@auth' enabled. Consider using @auth with @model
-          - Blog
           - Post
-          - Comment
       Learn more about @auth here: https://aws-amplify.github.io/docs/cli-toolchain/graphql#auth 
 
       GraphQL schema compiled successfully.
@@ -219,32 +200,116 @@
     ```
 
 10. amplify add auth
+    - add auth via Amplify CLI
+      ```
+      $ amplify add auth
+      
+      Using service: Cognito, provided by: awscloudformation
+      
+      The current configured provider is Amazon Cognito. 
+      
+      Do you want to use the default authentication and security configuration? "Default configuration"
+      Warning: you will not be able to edit these selections. 
+      How do you want users to be able to sign in? "Username"
+      Do you want to configure advanced settings? "No, I am done."
+
+      Successfully added resource justappf8f30b2f locally
+      ```
     - add `@auth` directive in `amplify/backend/api/justapp/schema.graphql`
+      ```gql
+      type Post @model {
+        id: ID!
+        content: String!
+          @auth(
+            rules: [
+              { allow: owner, operations: [create, update, delete] }
+            ]
+          )
+        likes: Int!
+        author: String!
+        createdAt: AWSTimestamp!
+        updatedAt: AWSTimestamp!
+      }
+      ```
 11. amplify update api
     - Change authorization type `API Key` -> `Amazon Cognito User Pool`
-    - execute updated schema to type Amplify CLI
+    - and updated schema to type Amplify CLI
       ```
       $ amplify api update
+      ? Please select from one of the below mentioned services: "GraphQL"
+      ? Choose the default authorization type for the API "Amazon Cognito User Pool"
+      Use a Cognito user pool configured as a part of this project.
+      ? Do you want to configure advanced settings for the GraphQL API "No, I am done."
+
       $ amplify codegen
       ```
 12. amplify mock
+    - deploy `Auth` resource to AWS Cloud
     - check added `cognito_user_pool` Auth Type in Amplify's API Mock console
-13. import Amplify's `Auth` module
+    ```
+    $ amplify mock
+    Some resources have changed locally and these resources are not mockable. The resources listed below need to be pushed to the cloud before starting the mock server.
+
+    Current Environment: dev
+
+    | Category | Resource name   | Operation | Provider plugin   |
+    | -------- | --------------- | --------- | ----------------- |
+    | Auth     | justappf8f30b2f | Create    | awscloudformation |
+    ? Are you sure you want to continue? "Yes"
+    ```
+13. import Amplify's `Auth` module in expo
     - using `withAuthenticator`
-    - (if possible) use `I18n` util
 14. amplify add storage
-    - schema.graphql에서 S3Object 타입 추가하기
-    - 변경된 schema update하기
+    - add storage resource via Amplify's CLI
+      ```
+      ? Please select from one of the below mentioned services: "Content (Images, audio, video, etc.)"
+      ? Please provide a friendly name for your resource that will be used to label this category in the project: "justappstorage"
+      ? Please provide bucket name: "justappstorage"
+      ? Who should have access: "Auth and guest users"
+      ? What kind of access do you want for Authenticated users? "create/update, read, delete"
+      ? What kind of access do you want for Guest users? "read"
+      ? Do you want to add a Lambda Trigger for your S3 Bucket? "No"
+      ```
+    - add type `S3Object` in `schema.graphql`
+      ```gql
+        type S3Object {
+          bucket: String!
+          region: String!
+          key: String!
+        }
+        type Post @model {
+          id: ID!
+          content: String!
+            @auth(
+              rules: [
+                { allow: owner, operations: [create, update, delete] }
+              ]
+            )
+          image: S3Object!
+            @auth(
+              rules: [
+                { allow: owner, operations: [create, update, delete] }
+              ]
+            )
+          likes: Int!
+          author: String!
+          createdAt: AWSTimestamp!
+          updatedAt: AWSTimestamp!
+        }
+      ```
+    - update schema via Amplify's CLI
       ```
       $ amplify api update
       $ amplify codegen
       ```
-15. expo에서 amplify storage import해서 코딩하기
-    - expo install expo-image-picker 한 이후 코딩
-16. 자기 id가 코멘트에 언급되었는지(좋아요가 눌렸는지) subscription으로 확인하기
-    - Amplify's API의 `subscription` query로 코딩하기
-17. amplify mock & expo start
-    - withAuthenticator로 로그인하고 이미지 업로드 해보기
+15. import Amplify's `Storage` in expo
+    - install & coding with `expo-image-picker`
+      ```
+        $ expo install expo-image-picker
+      ```
+16. check likes count with Amplify `API`'s `subscription`
+17. login in app and add post
+    - amplify mock & expo start
 18. amplify add analytics
     - expo에서 analytics import해서 코딩하기
 19. expo start & check analytics on AWS console

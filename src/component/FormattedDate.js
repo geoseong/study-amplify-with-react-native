@@ -8,7 +8,8 @@ const digitFiller = digit => {
   return nDigit < 10 ? `0${nDigit}` : nDigit;
 };
 const FormattedDate = ({ date, format }) => {
-  const dt = new Date(date);
+  const transformedDt = isNaN(date) ? date : Number(date)
+  const dt = new Date(transformedDt);
   const _year = dt.getFullYear();
   const _month = dt.getMonth() + 1;
   const _date = dt.getDate();

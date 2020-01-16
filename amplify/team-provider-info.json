@@ -10,6 +10,11 @@
             "StackName": "amplify-justapp-dev-234651",
             "StackId": "arn:aws:cloudformation:ap-northeast-2:623542739657:stack/amplify-justapp-dev-234651/b4bef560-36dc-11ea-af22-0a70bc372970",
             "AmplifyAppId": "d2egeeayc0vvkl"
+        },
+        "categories": {
+            "auth": {
+                "justappf8f30b2f": {}
+            }
         }
     }
 }

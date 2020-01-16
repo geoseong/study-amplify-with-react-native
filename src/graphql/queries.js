@@ -11,15 +11,7 @@ export const getPost = `query GetPost($id: ID!) {
       key
     }
     likes
-    comments {
-      items {
-        id
-        author
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
+    author
     createdAt
     updatedAt
   }
@@ -40,58 +32,8 @@ export const listPosts = `query ListPosts(
         key
       }
       likes
-      comments {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    nextToken
-  }
-}
-`;
-export const getComment = `query GetComment($id: ID!) {
-  getComment(id: $id) {
-    id
-    author
-    post {
-      id
-      content
-      image {
-        bucket
-        region
-        key
-      }
-      likes
-      comments {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    createdAt
-    updatedAt
-  }
-}
-`;
-export const listComments = `query ListComments(
-  $filter: ModelCommentFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
       author
-      post {
-        id
-        content
-        likes
-        createdAt
-        updatedAt
-      }
       createdAt
-      updatedAt
     }
     nextToken
   }

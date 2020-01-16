@@ -38,6 +38,8 @@ const Main = props => {
    * @name subscription
    * @description Mock does not yet support the new WebSocket based subscriptions
    * @reference https://github.com/aws-amplify/amplify-cli/issues/2935#issuecomment-563372044
+   * @description "Amplify Mock has only support MQTT for subscriptions. We have a backlog item to add support for websockets"
+   * @reference https://github.com/aws-amplify/amplify-cli/issues/3008#issuecomment-566301536
    */
   // useEffect(() => {
   //   const subscription = API.graphql(graphqlOperation(onCreatePost)).subscribe({
@@ -52,7 +54,6 @@ const Main = props => {
   console.log('---posts', posts);
   return (
     <>
-      {/* <StatusBar barStyle='dark-content' /> */}
       <SafeAreaView>
         <View
           style={[
@@ -69,13 +70,13 @@ const Main = props => {
           </View>
         </View>
         <ScrollView
-          contentInsetAdjustmentBehavior='automatic'
-          style={styles.scrollView}
+          style={[styles.scrollView, { marginBottom: 50 }]}
         >
           {posts.map(post => (
             <Post
               key={post.id}
               id={post.id}
+              author={post.author}
               bucket={post.image.bucket}
               region={post.image.region}
               path={post.image.key}

@@ -13,12 +13,21 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   sectionContainer: {
+    marginVertical: 10,
+    marginHorizontal: 15,
     paddingVertical: 10,
     paddingHorizontal: 15,
+  },
+  loadingTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+    textAlign: 'center',
+    color: Colors.white,
   },
   sectionTitle: {
     fontSize: 24,
     fontWeight: '600',
+    textAlign: 'center',
     color: Colors.black,
   },
   sectionDescription: {
@@ -64,6 +73,10 @@ const styles = StyleSheet.create({
   },
   contentBetweenAlignCenter:{
     justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  contentCenterAlignCenter:{
+    justifyContent: 'center',
     alignItems: 'center',
   },
   alignStretch: {
