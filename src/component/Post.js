@@ -33,14 +33,12 @@ const Post = ({
     updatedAt,
   });
   // const { bucket, region, path, content, likes, updatedAt } = props;
-  const [image, setImage] = useState(null)
+  const [imageUrl, setImageUrl] = useState(null)
   useEffect(() => {
     Storage.get(path).then(file => {
-      console.log('---- file', file)
-      setImage(file)
+      setImageUrl(file)
     }).catch(err => console.warn('---- post error', err))
   }, [])
-  // console.warn('---- image!', image)
   const setLike = async () => {
     const incrementedLike = {
       id,
@@ -67,18 +65,12 @@ const Post = ({
           },
         ]}
       >
-        {image && (<Image
-          style={{ width: '100%', height: 100, resizeMode: 'contain' }}
+        {imageUrl && (<Image
+          style={{ width: '100%', height: 300, resizeMode: 'auto' }}
           source={{
-            uri: `https://${bucket}.s3.${region}.amazonaws.com/${path}`,
+            uri: imageUrl,
           }}
         />)}
-        {/* {image && (<Image
-          style={{ width: '100%', height: 100, resizeMode: 'contain' }}
-          source={{
-            uri: `https://${bucket}.s3.${region}.amazonaws.com/${path}`,
-          }}
-        />)} */}
         <View style={{ marginVertical: 15 }}>
           <Text>{content}</Text>
           <View style={{ textAlign: 'right' }}>
