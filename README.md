@@ -202,6 +202,8 @@
    - get connection between `amplify's localhost api` and `expo debugging`
 8. modify `amplify framework's API` code in `expo`
    - mutation, subscription
+   - or query, mutation only
+   - because amplify mock doesn't support subscription
 9. re-configure graphql query `maximum statement depth`
     ```
     $ amplify configure codegen
@@ -215,17 +217,18 @@
     $ amplify codegen
     ✔ Generated GraphQL operations successfully and saved at src/graphql
     ```
+
 10. amplify add auth
-   - add `@auth` directive in `amplify/backend/api/justapp/schema.graphql`
+    - add `@auth` directive in `amplify/backend/api/justapp/schema.graphql`
 11. amplify update api
-   - Change authorization type `API Key` -> `Amazon Cognito User Pool`
-   - execute updated schema to type Amplify CLI
+    - Change authorization type `API Key` -> `Amazon Cognito User Pool`
+    - execute updated schema to type Amplify CLI
       ```
       $ amplify api update
       $ amplify codegen
       ```
 12. amplify mock
-   - check added `cognito_user_pool` Auth Type in Amplify's API Mock console
+    - check added `cognito_user_pool` Auth Type in Amplify's API Mock console
 13. import Amplify's `Auth` module
     - using `withAuthenticator`
     - (if possible) use `I18n` util

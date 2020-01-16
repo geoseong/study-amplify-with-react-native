@@ -9,11 +9,9 @@ const AddBtn = ({ navigation }) => {
   }
   return (
     <>
-      <View style={[styles.flexRow, styles.contentCenter, styles.bottomFix]}>
-        <TouchableOpacity style={{}} onPress={gotoAddPost}>
-          <Text>ADD</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={[styles.pb1, styles.pt1, styles.pl1, styles.pr1]} onPress={gotoAddPost}>
+        <Text>ADD POST</Text>
+      </TouchableOpacity>
     </>
   );
 };

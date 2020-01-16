@@ -114,9 +114,9 @@ const StackNavigatorConfig = {
     cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
     headerRight: () => {
       return (
-        <SafeAreaView>
+        <View>
           <Text>{`HEADERRIGHT`}</Text>
-        </SafeAreaView>
+        </View>
       );
     },
     headerRightContainerStyle: {

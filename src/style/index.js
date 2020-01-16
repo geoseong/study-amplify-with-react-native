@@ -30,6 +30,12 @@ const styles = StyleSheet.create({
   highlight: {
     fontWeight: '700',
   },
+  chooseImgBtn: {
+    fontSize: 20,
+    color: 'red',
+    borderRadius: 10,
+    padding: 5,
+  },
   footer: {
     color: Colors.dark,
     fontSize: 12,
@@ -38,12 +44,19 @@ const styles = StyleSheet.create({
     paddingRight: 12,
     textAlign: 'right',
   },
-  flexRow: {
+  screenTopLine: {
+    padding: 10,
+    backgroundColor: 'orange',
+  },
+  flex: {
     flex: 1,
+  },
+  flexRow: {
+    // flex: 1,
     flexDirection: 'row',
   },
   flexColumn: {
-    flex: 1,
+    // flex: 1,
     flexDirection: 'column',
   },
   contentCenter: {
@@ -53,8 +66,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  alignStretch: {
+    alignItems: 'stretch',
+  },
   flexEnd: {
     justifyContent: 'flex-end',
+  },
+  topLeftFix: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
+  topRightFix: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
   },
   bottomFix: {
     position: 'absolute',
@@ -66,6 +92,12 @@ const styles = StyleSheet.create({
   },
   pr1: {
     paddingRight: 5,
+  },
+  pt1: {
+    paddingTop: 5,
+  },
+  pb1: {
+    paddingBottom: 5,
   },
   w20: {
     width: '20%',

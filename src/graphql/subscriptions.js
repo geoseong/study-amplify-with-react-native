@@ -14,7 +14,7 @@ export const onCreatePost = `subscription OnCreatePost {
     comments {
       items {
         id
-        content
+        author
         createdAt
         updatedAt
       }
@@ -38,7 +38,7 @@ export const onUpdatePost = `subscription OnUpdatePost {
     comments {
       items {
         id
-        content
+        author
         createdAt
         updatedAt
       }
@@ -62,7 +62,7 @@ export const onDeletePost = `subscription OnDeletePost {
     comments {
       items {
         id
-        content
+        author
         createdAt
         updatedAt
       }
@@ -76,7 +76,7 @@ export const onDeletePost = `subscription OnDeletePost {
 export const onCreateComment = `subscription OnCreateComment {
   onCreateComment {
     id
-    content
+    author
     post {
       id
       content
@@ -100,7 +100,7 @@ export const onCreateComment = `subscription OnCreateComment {
 export const onUpdateComment = `subscription OnUpdateComment {
   onUpdateComment {
     id
-    content
+    author
     post {
       id
       content
@@ -124,7 +124,7 @@ export const onUpdateComment = `subscription OnUpdateComment {
 export const onDeleteComment = `subscription OnDeleteComment {
   onDeleteComment {
     id
-    content
+    author
     post {
       id
       content

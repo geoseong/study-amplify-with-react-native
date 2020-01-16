@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 
-const useInput = props => {
-  const [value, setValue] = useState('')
+const useInput = (content, setContent) => {
+  const [value, setValue] = useState(content)
   // useEffect(() => {
   // }, [value])
   const onChangeText = e => {

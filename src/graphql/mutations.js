@@ -17,7 +17,7 @@ export const createPost = `mutation CreatePost(
     comments {
       items {
         id
-        content
+        author
         createdAt
         updatedAt
       }
@@ -44,7 +44,7 @@ export const updatePost = `mutation UpdatePost(
     comments {
       items {
         id
-        content
+        author
         createdAt
         updatedAt
       }
@@ -71,7 +71,7 @@ export const deletePost = `mutation DeletePost(
     comments {
       items {
         id
-        content
+        author
         createdAt
         updatedAt
       }
@@ -88,7 +88,7 @@ export const createComment = `mutation CreateComment(
 ) {
   createComment(input: $input, condition: $condition) {
     id
-    content
+    author
     post {
       id
       content
@@ -115,7 +115,7 @@ export const updateComment = `mutation UpdateComment(
 ) {
   updateComment(input: $input, condition: $condition) {
     id
-    content
+    author
     post {
       id
       content
@@ -142,7 +142,7 @@ export const deleteComment = `mutation DeleteComment(
 ) {
   deleteComment(input: $input, condition: $condition) {
     id
-    content
+    author
     post {
       id
       content

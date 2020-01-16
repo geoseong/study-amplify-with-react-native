@@ -54,6 +54,20 @@ const Main = props => {
     <>
       {/* <StatusBar barStyle='dark-content' /> */}
       <SafeAreaView>
+        <View
+          style={[
+            styles.flexRow,
+            styles.contentBetweenAlignCenter,
+            styles.screenTopLine,
+          ]}
+        >
+          <View style={{}}>
+            <Text>Welcome {`userId`} ~!</Text>
+          </View>
+          <View style={{}}>
+            <AddBtn navigation={navigation} />
+          </View>
+        </View>
         <ScrollView
           contentInsetAdjustmentBehavior='automatic'
           style={styles.scrollView}
@@ -72,7 +86,6 @@ const Main = props => {
             />
           ))}
         </ScrollView>
-        <AddBtn navigation={navigation} />
       </SafeAreaView>
     </>
   );
