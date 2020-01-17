@@ -9,8 +9,8 @@ const AddBtn = ({ navigation }) => {
   }
   return (
     <>
-      <TouchableOpacity style={[styles.pb1, styles.pt1, styles.pl1, styles.pr1]} onPress={gotoAddPost}>
-        <Text>ADD POST</Text>
+      <TouchableOpacity style={[styles.p1]} onPress={gotoAddPost}>
+        <Text style={[styles.fontBold]}>ADD POST</Text>
       </TouchableOpacity>
     </>
   );

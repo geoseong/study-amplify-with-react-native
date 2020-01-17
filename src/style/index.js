@@ -1,5 +1,5 @@
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {StyleSheet} from 'react-native';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -71,11 +71,11 @@ const styles = StyleSheet.create({
   contentCenter: {
     justifyContent: 'center',
   },
-  contentBetweenAlignCenter:{
+  contentBetweenAlignCenter: {
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  contentCenterAlignCenter:{
+  contentCenterAlignCenter: {
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -95,10 +95,14 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
   },
+  fontBold: { fontWeight: 'bold' },
   bottomFix: {
     position: 'absolute',
     bottom: 10,
     left: 0,
+  },
+  p1: {
+    padding: 5,
   },
   pl1: {
     paddingLeft: 5,

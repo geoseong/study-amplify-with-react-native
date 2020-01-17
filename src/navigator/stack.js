@@ -1,9 +1,9 @@
-import { CardStyleInterpolators, createStackNavigator } from 'react-navigation-stack';
-import { CreatePost, Main } from '../screen';
 import {
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+  CardStyleInterpolators,
+  createStackNavigator,
+} from 'react-navigation-stack';
+import { CreatePost, Main } from '../screen';
+import { Text, TouchableOpacity } from 'react-native';
 
 import { Auth } from 'aws-amplify';
 import React from 'react';
@@ -15,18 +15,8 @@ import { withAuthenticator } from 'aws-amplify-react-native';
  *  which tells the navigator what to present for that route.
  */
 const RouteConfigs = {
-  // For each screen that you can navigate to, create a new entry like this:
   Main: {
-    // `ProfileScreen` is a React component that will be the main content of the screen.
     screen: Main,
-    // When `ProfileScreen` is loaded by the StackNavigator, it will be given a `navigation` prop.
-    // The action and route params are extracted from the path.
-    params: { pagename: 'awskrugGallery' },
-    // Optional: Override the `navigationOptions` for the screen
-    navigationOptions: ({ navigation }) => {
-      return {
-      };
-    },
   },
   CreatePost: {
     screen: CreatePost,
@@ -61,26 +51,28 @@ const StackNavigatorConfig = {
    * which conflicts with the drawer example gesture
    */
   mode: Platform.OS === 'ios' ? 'modal' : 'card',
-  defaultNavigationOptions: ({ navigation }) => ({
-    cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-    headerRight: () => {
-      return (
-        <TouchableOpacity onPress={e => {
-          Auth.signOut()
-          navigation.navigate('AuthLoading')
-        }}>
-          <Text>{`LOGOUT`}</Text>
-        </TouchableOpacity>
-      );
-    },
-    headerRightContainerStyle: {
-      // width: '50%',
-      color: 'red',
-      fontWeight: 'bold',
-      padding: 10,
-      // color: 'white',
-    },
-  }),
+  defaultNavigationOptions: ({ navigation }) => {
+    return {
+      cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+      headerRight: () => {
+        return (
+          <TouchableOpacity
+            onPress={e => {
+              Auth.signOut();
+              navigation.navigate('AuthLoading');
+            }}
+          >
+            <Text>{`LOGOUT`}</Text>
+          </TouchableOpacity>
+        );
+      },
+      headerRightContainerStyle: {
+        color: 'red',
+        fontWeight: 'bold',
+        padding: 10,
+      },
+    }
+  },
 };
 
 const StackNav = createStackNavigator(RouteConfigs, StackNavigatorConfig);

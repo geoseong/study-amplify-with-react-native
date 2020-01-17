@@ -1,21 +1,12 @@
 import { API, Storage, graphqlOperation } from 'aws-amplify';
 import { Image, Text, View } from 'react-native';
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 
 import { FormattedDate } from './FormattedDate';
 import { Like } from './Like';
 import styles from '../style';
 import { updatePost } from '../graphql/mutations';
 
-const MemoizedImage = memo(({ imageUrl }) => (
-  <Image
-    style={{ width: '100%', height: 300 }}
-    source={{
-      uri: imageUrl,
-    }}
-    resizeMode={'cover'}
-  />
-));
 const Post = ({
   id,
   bucket,
@@ -25,9 +16,10 @@ const Post = ({
   likes,
   author,
   setPosts,
+  createdAt,
   updatedAt,
 }) => {
-  // TODO: createdAt, updatedAt date format coding
+  const [imageUrl, setImageUrl] = useState(null);
   console.log('Post props', {
     id,
     bucket,
@@ -38,10 +30,8 @@ const Post = ({
     author,
     updatedAt,
   });
-  const [_likes, setLikes] = useState(likes);
-  const [imageUrl, setImageUrl] = useState(imageUrl);
   useEffect(() => {
-    setLikes(likes);
+    // setLikes(likes);
     Storage.get(path)
       .then(file => {
         setImageUrl(file);
@@ -51,7 +41,7 @@ const Post = ({
   const setLike = async () => {
     const incrementedLike = {
       id,
-      likes: _likes + 1,
+      likes: likes + 1,
     };
     const likeRes = await API.graphql(
       graphqlOperation(updatePost, {
@@ -59,7 +49,7 @@ const Post = ({
       }),
     );
     console.log('setLike likeRes', likeRes);
-    setLikes(likeRes.data.updatePost.likes);
+    // setLikes(likeRes.data.updatePost.likes);
   };
 
   return (
@@ -74,8 +64,7 @@ const Post = ({
           },
         ]}
       >
-        {imageUrl && <MemoizedImage imageUrl={imageUrl} />}
-        {/* {imageUrl && (
+        {imageUrl && (
           <Image
             style={{ width: '100%', height: 300 }}
             source={{
@@ -83,17 +72,17 @@ const Post = ({
             }}
             resizeMode={'cover'}
           />
-        )} */}
+        )}
         <View style={{ marginVertical: 15 }}>
           <Text>{content}</Text>
           <View style={{ textAlign: 'right' }}>
-            <FormattedDate date={updatedAt} />
+            <FormattedDate date={createdAt} />
           </View>
         </View>
         <View style={[styles.flexRow, styles.contentBetweenAlignCenter]}>
           <View style={[styles.flexRow]}>
-            <Text>{_likes} Likes</Text>
-            <Like id={id} likes={_likes} setLike={setLike} />
+            <Text>{likes} Likes</Text>
+            <Like id={id} likes={likes} setLike={setLike} />
           </View>
           <View style={{}}>
             <Text>

@@ -4,11 +4,11 @@ import {
   Button,
   SafeAreaView,
   ScrollView,
-  StatusBar,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   onCreatePost,
   onDeletePost,
@@ -18,15 +18,12 @@ import {
 import { listPosts } from '../graphql/queries';
 import styles from '../style';
 
-const onLoadList = async () => {
-  const postList = await API.graphql(graphqlOperation(listPosts));
-  console.log(postList);
-};
-
 const Main = props => {
   const { navigation } = props;
   const [posts, setPosts] = useState([]);
-  const subscription = useRef(null);
+  const [refresh, setRefresh] = useState([]);
+  const username = useRef(navigation.getParam('username', ''))
+  console.warn('Main props', props)
   useEffect(() => {
     API.graphql(graphqlOperation(listPosts)).then(postList => {
       const { listPosts } = postList.data;
@@ -34,7 +31,7 @@ const Main = props => {
         setPosts(listPosts.items);
       }
     });
-  }, []);
+  }, [refresh]);
   /**
    * @name subscription
    * @description Mock does not yet support the new WebSocket based subscriptions
@@ -42,12 +39,8 @@ const Main = props => {
    * @description "Amplify Mock has only support MQTT for subscriptions. We have a backlog item to add support for websockets"
    * @reference https://github.com/aws-amplify/amplify-cli/issues/3008#issuecomment-566301536
    */
-  // TODO: subscription like 가져오기
   useEffect(() => {
-    // const subscription = API.graphql(graphqlOperation(onUpdatePost)).subscribe({
-    subscription.current = API.graphql(
-      graphqlOperation(onUpdatePost),
-    ).subscribe({
+    const subscription = API.graphql(graphqlOperation(onUpdatePost)).subscribe({
       next: postData => {
         if (
           !postData ||
@@ -59,7 +52,6 @@ const Main = props => {
         }
         const updatedPost = postData.value.data.onUpdatePost;
         console.log('---subscription', updatedPost);
-        console.log('---posts', posts);
         const updatedPosts = posts.map(post => {
           if (updatedPost.id === post.id) {
             return updatedPost;
@@ -71,12 +63,14 @@ const Main = props => {
       },
     });
     return () => {
-      if (subscription.current) {
-        subscription.current.unsubscribe();
+      if (subscription) {
+        subscription.unsubscribe();
       }
     };
-  }, [posts, subscription]);
-  // console.log('---posts', posts);
+  }, [posts]);
+  const onRefresh = useCallback(() => {
+    setRefresh(!refresh)
+  }, [refresh])
   return (
     <>
       <SafeAreaView>
@@ -88,8 +82,11 @@ const Main = props => {
           ]}
         >
           <View style={{}}>
-            <Text>Welcome {`userId`} ~!</Text>
+            <Text>Welcome {username.current} ~!</Text>
           </View>
+          <TouchableOpacity style={[styles.p1]} onPress={onRefresh}>
+            <Text style={[styles.fontBold]}>REFRESH</Text>
+          </TouchableOpacity>
           <View style={{}}>
             <AddBtn navigation={navigation} />
           </View>
@@ -97,7 +94,7 @@ const Main = props => {
         <ScrollView style={[styles.scrollView, { marginBottom: 50 }]}>
           {posts.map(post => (
             <Post
-              key={post.id + post.likes}
+              key={post.id}
               id={post.id}
               author={post.author}
               bucket={post.image.bucket}
@@ -106,6 +103,7 @@ const Main = props => {
               content={post.content}
               likes={post.likes}
               setPosts={setPosts}
+              createdAt={post.createdAt}
               updatedAt={post.updatedAt}
             />
           ))}
@@ -114,5 +112,10 @@ const Main = props => {
     </>
   );
 };
+Main.navigationOptions = ({ navigation }) => {
+  return {
+    title: 'AWSKRUG 2020 COMMUNITY DAY',
+  }
+}
 
 export { Main };

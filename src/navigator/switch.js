@@ -1,5 +1,4 @@
-import { Auth, AuthLoadingScreen } from '../screen';
-
+import { AuthLoadingScreen } from '../screen';
 import StackNav from './stack';
 import { createSwitchNavigator } from 'react-navigation';
 
@@ -10,8 +9,8 @@ import { createSwitchNavigator } from 'react-navigation';
  */
 const RouteConfigs = {
   AuthLoading: AuthLoadingScreen,
-  Main: StackNav,
-  // Auth,
+  StackNav,
+  // Main: StackNav,
 };
 /**
  * @param initialRouteName - The routeName for the initial tab route when first loading.

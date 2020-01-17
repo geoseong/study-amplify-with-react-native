@@ -20,6 +20,7 @@ import {
 import { InputBoxPost, SubmitBtn } from '../component';
 import React, { useEffect, useState } from 'react';
 
+import { NavigationActions } from 'react-navigation';
 import config from '../aws-exports';
 import { createPost } from '../graphql/mutations';
 import styles from '../style';
@@ -81,10 +82,6 @@ const CreatePost = props => {
     const storagePutRes = await Storage.put(
       filename,
       buffer,
-      // {
-      //   // contentType: image.type + '/*',
-      //   contentType: 'image/*',
-      // }
     );
     console.log('## submitEvt storagePutRes', storagePutRes);
     /* appsync mutation */
@@ -105,6 +102,11 @@ const CreatePost = props => {
     console.log('## submitEvt postRes', postRes);
     // TODO: 포스팅 추가 후에 navigation 뒤로 갔을 때 list query를 한 번 더 불러오게 한다
     /* history.back */
+    // const setParamsAction = NavigationActions.setParams({
+    //   params: { refresh: true },
+    //   key: 'Main',
+    // });
+    // navigation.dispatch(setParamsAction);
     navigation.goBack();
   };
 
@@ -132,7 +134,8 @@ const CreatePost = props => {
                 {image && (
                   <Image
                     source={{ uri: image.uri }}
-                    style={{ width: image.width, height: image.height }}
+                    style={{ width: '100%', height: 300 }}
+                    resizeMode={'cover'}
                   />
                 )}
               </View>
