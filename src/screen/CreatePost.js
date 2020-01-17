@@ -77,13 +77,6 @@ const CreatePost = props => {
     const filename = splittedImgPath[splittedImgPath.length - 1];
     const imgObj = await fetch(image.uri)
     const buffer = await imgObj.blob()
-    // const buffer = await imgObj.arrayBuffer()
-    // console.log('!!!!', { buffer })
-    // return
-      // .then(response => response.blob())
-      // .then(Buffer => Storage.put(key, Buffer))
-      // .then(x => console.log('SAVED IMAGE WITH KEY', x) || x)
-      // .catch(err => console.log("IMAGE UPLOAD ERROR", err));
     /* storage putitem */
     const storagePutRes = await Storage.put(
       filename,
@@ -110,6 +103,7 @@ const CreatePost = props => {
     };
     const postRes = await API.graphql(graphqlOperation(createPost, { input }));
     console.log('## submitEvt postRes', postRes);
+    // TODO: 포스팅 추가 후에 navigation 뒤로 갔을 때 list query를 한 번 더 불러오게 한다
     /* history.back */
     navigation.goBack();
   };

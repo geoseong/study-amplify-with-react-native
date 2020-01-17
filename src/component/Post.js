@@ -1,15 +1,21 @@
 import { API, Storage, graphqlOperation } from 'aws-amplify';
 import { Image, Text, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
 import { FormattedDate } from './FormattedDate';
 import { Like } from './Like';
 import styles from '../style';
 import { updatePost } from '../graphql/mutations';
 
-const updateSpecificPost = post => {
-  // setPosts
-};
+const MemoizedImage = memo(({ imageUrl }) => (
+  <Image
+    style={{ width: '100%', height: 300 }}
+    source={{
+      uri: imageUrl,
+    }}
+    resizeMode={'cover'}
+  />
+));
 const Post = ({
   id,
   bucket,
@@ -21,7 +27,7 @@ const Post = ({
   setPosts,
   updatedAt,
 }) => {
-  const [_likes, setLikes] = useState(likes);
+  // TODO: createdAt, updatedAt date format coding
   console.log('Post props', {
     id,
     bucket,
@@ -32,13 +38,16 @@ const Post = ({
     author,
     updatedAt,
   });
-  // const { bucket, region, path, content, likes, updatedAt } = props;
-  const [imageUrl, setImageUrl] = useState(null)
+  const [_likes, setLikes] = useState(likes);
+  const [imageUrl, setImageUrl] = useState(imageUrl);
   useEffect(() => {
-    Storage.get(path).then(file => {
-      setImageUrl(file)
-    }).catch(err => console.warn('---- post error', err))
-  }, [])
+    setLikes(likes);
+    Storage.get(path)
+      .then(file => {
+        setImageUrl(file);
+      })
+      .catch(err => console.warn('---- post error', err));
+  }, []);
   const setLike = async () => {
     const incrementedLike = {
       id,
@@ -52,7 +61,7 @@ const Post = ({
     console.log('setLike likeRes', likeRes);
     setLikes(likeRes.data.updatePost.likes);
   };
-  
+
   return (
     <>
       <View
@@ -65,12 +74,16 @@ const Post = ({
           },
         ]}
       >
-        {imageUrl && (<Image
-          style={{ width: '100%', height: 300, resizeMode: 'auto' }}
-          source={{
-            uri: imageUrl,
-          }}
-        />)}
+        {imageUrl && <MemoizedImage imageUrl={imageUrl} />}
+        {/* {imageUrl && (
+          <Image
+            style={{ width: '100%', height: 300 }}
+            source={{
+              uri: imageUrl,
+            }}
+            resizeMode={'cover'}
+          />
+        )} */}
         <View style={{ marginVertical: 15 }}>
           <Text>{content}</Text>
           <View style={{ textAlign: 'right' }}>

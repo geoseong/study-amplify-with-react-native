@@ -3,10 +3,6 @@ type S3Object {
   region: String!
   key: String!
 }
-# type Likes @model {
-#   likes: Int!
-#   post: Post @connection(fields: ["likes"])
-# }
 type Post @model {
   id: ID!
   content: String!
@@ -23,17 +19,6 @@ type Post @model {
     )
   likes: Int!
   author: String!
-  # likes: Likes! @connection(name: "PostLikes")
-  # comments: [Comment] @connection(name: "PostComments", sortField: "createdAt")
-  createdAt: AWSTimestamp!
-  updatedAt: AWSTimestamp!
+  createdAt: String!
+  updatedAt: String!
 }
-# type Comment
-#   @model
-#   @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
-#   id: ID!
-#   content: String!
-#   post: Post @connection(name: "PostComments", sortField: "createdAt")
-#   createdAt: AWSTimestamp!
-#   updatedAt: AWSTimestamp!
-# }

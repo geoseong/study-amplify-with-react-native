@@ -34,6 +34,7 @@ export const listPosts = `query ListPosts(
       likes
       author
       createdAt
+      updatedAt
     }
     nextToken
   }

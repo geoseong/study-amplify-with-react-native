@@ -8,7 +8,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   onCreatePost,
   onDeletePost,
@@ -26,6 +26,7 @@ const onLoadList = async () => {
 const Main = props => {
   const { navigation } = props;
   const [posts, setPosts] = useState([]);
+  const subscription = useRef(null);
   useEffect(() => {
     API.graphql(graphqlOperation(listPosts)).then(postList => {
       const { listPosts } = postList.data;
@@ -41,17 +42,41 @@ const Main = props => {
    * @description "Amplify Mock has only support MQTT for subscriptions. We have a backlog item to add support for websockets"
    * @reference https://github.com/aws-amplify/amplify-cli/issues/3008#issuecomment-566301536
    */
-  // useEffect(() => {
-  //   const subscription = API.graphql(graphqlOperation(onCreatePost)).subscribe({
-  //     next: postData => console.log(postData),
-  //   });
-  //   return () => {
-  //     if (subscription) {
-  //       subscription.unsubscribe();
-  //     }
-  //   };
-  // }, []);
-  console.log('---posts', posts);
+  // TODO: subscription like 가져오기
+  useEffect(() => {
+    // const subscription = API.graphql(graphqlOperation(onUpdatePost)).subscribe({
+    subscription.current = API.graphql(
+      graphqlOperation(onUpdatePost),
+    ).subscribe({
+      next: postData => {
+        if (
+          !postData ||
+          !postData.value ||
+          !postData.value.data ||
+          !postData.value.data.onUpdatePost
+        ) {
+          return;
+        }
+        const updatedPost = postData.value.data.onUpdatePost;
+        console.log('---subscription', updatedPost);
+        console.log('---posts', posts);
+        const updatedPosts = posts.map(post => {
+          if (updatedPost.id === post.id) {
+            return updatedPost;
+          } else {
+            return post;
+          }
+        });
+        setPosts(updatedPosts);
+      },
+    });
+    return () => {
+      if (subscription.current) {
+        subscription.current.unsubscribe();
+      }
+    };
+  }, [posts, subscription]);
+  // console.log('---posts', posts);
   return (
     <>
       <SafeAreaView>
@@ -69,12 +94,10 @@ const Main = props => {
             <AddBtn navigation={navigation} />
           </View>
         </View>
-        <ScrollView
-          style={[styles.scrollView, { marginBottom: 50 }]}
-        >
+        <ScrollView style={[styles.scrollView, { marginBottom: 50 }]}>
           {posts.map(post => (
             <Post
-              key={post.id}
+              key={post.id + post.likes}
               id={post.id}
               author={post.author}
               bucket={post.image.bucket}
