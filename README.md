@@ -1,11 +1,14 @@
 <!-- markdownlint-disable -->
 # AWSKRUG Community Day 2020 Amplify Demo
+## Prerequisites
+  - install [node.js](https://nodejs.org/ko/download/package-manager/)
+  - install [yarn](https://yarnpkg.com/lang/en/docs/install/#mac-stable)
+  - install [aws-cli](https://github.com/aws/aws-cli#installation)
+  - install [expo-cli](https://docs.expo.io/versions/v36.0.0/get-started/installation/#installing-expo-cli)
+  - must have [AWS Account](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/)
+  - configure AWS Account via [`aws configure` cli](https://github.com/aws/aws-cli#getting-started)
+
 ## Step
-1. if you don't have expo, try this
-    ```sh
-    $ npm install -g expo-cli
-    ```
-    and follow other process refer to [this expo docs](https://docs.expo.io/versions/v36.0.0/get-started/installation/#installing-expo-cli)
 1. `$ expo init`
    1. select `blank` in `Managed workflow`
    2. enter the project's `name` and `slug`. you can type `Tab` and `Shift + Tab` key to switch the cursor
@@ -56,7 +59,9 @@
     ```
 1. Expo Debugging
       ```sh
-      expo start --android
+      $ expo start --android
+      or
+      $ yarn android
       ```
 1. amplify init
     ```
@@ -96,7 +101,7 @@
 
     Your project has been successfully initialized and connected to the cloud!
     ```
-1. amplify add api
+2. amplify add api
    - authorization type: `API key`
    - edit `schema.graphql` with `@model` directive
     ```
@@ -140,9 +145,9 @@
       Edit your schema at /Users/{your path}/JustApp/amplify/backend/api/justapp/schema.graphql or place .graphql files in a directory at /Users/{your path}/JustApp/amplify/backend/api/justapp/schema
       Successfully added resource justapp locally
       ```
-1. amplify mocking and testing
+3. amplify mocking and testing
    - insert some data with using GraphQL's `mutation` query
-1. install **amplify framework**
+4. install **amplify framework**
     - cli
     ```
     $ yarn add aws-amplify
@@ -155,19 +160,14 @@
 
     Amplify.configure(config);
     ```
-1. make `/src` folder and coding
-   - `/src/component`
-   - `/src/style`
-   - `/src/screen`
-   - `/src/navigator`
+5. make sure navigation's structure
      - Stack Navigator: `stack.js`
        - Main: **Main.js**
        - CreatePost: **CreatePost.js**
      - Switch Navigator: `switch.js`
        - AuthLoading: **AuthLoadingScreen.js**
-       - Main: **Stack Navigator**
-       - Auth: **Auth.js**
-1. add code **Amplify's** `API` Moule in expo
+       - StackNav: **Stack Navigator**
+3. add code **Amplify's** `API` Moule in expo
    - amplify add codegen
       ```
       $ amplify add codegen
@@ -179,15 +179,17 @@
       ✔ Generated GraphQL operations successfully and saved at src/graphql
       ```
    - import `API` and code with created `AppSync API`
-1. execute `amplify mock` & `expo start`
+4. execute `amplify mock` & `expo start`
    - make sure to get connection between `amplify's localhost api` and `expo debugging`
-1. modify `amplify framework's API` code in `expo`
+5. modify `amplify framework's API` code in `expo`
    - mutation, subscription
    - or query, mutation only
    - because amplify mock doesn't support subscription
      - [github issue 1](https://github.com/aws-amplify/amplify-cli/issues/2935#issuecomment-563372044)
      - [github issue 2](https://github.com/aws-amplify/amplify-cli/issues/3008#issuecomment-566301536)
-1. re-configure graphql query `maximum statement depth`
+6. re-configure graphql query `maximum statement depth`
+    - before doing this, check out the `cheatsheet/src/graphql/queries.js` file and see GraphQL query's statement depth
+    - after `amplify configure codegen` process, check out the GraphQL query's statement depth again.
     ```
     $ amplify configure codegen
 
@@ -201,7 +203,7 @@
     ✔ Generated GraphQL operations successfully and saved at src/graphql
     ```
 
-1. amplify add auth
+7. amplify add auth
     - add `auth` via Amplify CLI
       ```
       $ amplify add auth
@@ -233,7 +235,7 @@
         updatedAt: AWSTimestamp!
       }
       ```
-1. amplify update api
+8. amplify update api
     - Change authorization type `API Key` -> `Amazon Cognito User Pool`
     - and updated schema to type Amplify CLI
       ```
@@ -245,7 +247,7 @@
 
       $ amplify codegen
       ```
-1. amplify mock
+9.  amplify mock
     - deploy `Auth` resource to AWS Cloud
     - check added `cognito_user_pool` Auth Type in Amplify's API Mock console
     ```
@@ -259,9 +261,12 @@
     | Auth     | justappf8f30b2f | Create    | awscloudformation |
     ? Are you sure you want to continue? "Yes"
     ```
-1. import Amplify's `Auth` module in expo
-    - using `withAuthenticator`
-1. amplify add storage
+10. import Amplify's `Auth` module in expo
+    - wrap StackNav component with `withAuthenticator`
+      ```js
+        export default withAuthenticator(StackNav);
+      ```
+11. amplify add storage
     - add storage resource via Amplify's CLI
       ```
       $ admplif add storage
@@ -308,19 +313,13 @@
       $ amplify api update
       $ amplify codegen
       ```
-1.  import Amplify's `Storage` in expo
-    - install & coding with `expo-image-picker`
-      ```
-        $ expo install expo-image-picker
-      ```
-1.  check likes count with Amplify `API`'s `subscription`
-1. login in app and add post
-    - amplify mock & expo start
-1. push amplify's resouces
+12. push amplify's resouces
     ```
     $ amplify push
     ```
-1. amplify add analytics
+13. check likes count with Amplify `API`'s `subscription`
+14. login in app and add post
+15. amplify add analytics
     - add analytics resouce via Amplify's CLI
       ```
       $ amplify add analytics
@@ -336,8 +335,8 @@
       $ amplify push analytics
       ```
     - import Amplify's `Analytics` module in expo
-1.  expo start & check analytics on AWS console
-1.  amplify delete
+16. expo start & check analytics on AWS console
+17. amplify delete
 
 
 ## Build Standalone App
