@@ -10,7 +10,6 @@ import { createSwitchNavigator } from 'react-navigation';
 const RouteConfigs = {
   AuthLoading: AuthLoadingScreen,
   StackNav,
-  // Main: StackNav,
 };
 /**
  * @param initialRouteName - The routeName for the initial tab route when first loading.

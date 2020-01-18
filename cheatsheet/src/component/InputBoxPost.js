@@ -15,8 +15,6 @@ const InputBoxPost = ({ content = '', setContent }) => {
     }
   }, [content]);
   const onChangeText = e => {
-    console.log('onchange e', e)
-    // const { value } = (e && e.target) || {};
     setContent(e);
   };
   return (

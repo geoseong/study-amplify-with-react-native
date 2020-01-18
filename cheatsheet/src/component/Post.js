@@ -31,7 +31,6 @@ const Post = ({
   //   updatedAt,
   // });
   useEffect(() => {
-    // setLikes(likes);
     Storage.get(path)
       .then(file => {
         setImageUrl(file);
