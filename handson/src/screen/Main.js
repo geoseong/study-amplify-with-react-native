@@ -51,9 +51,9 @@ const Main = props => {
               key={post.id}
               id={post.id}
               author={post.author}
-              bucket={post.image.bucket}
-              region={post.image.region}
-              path={post.image.key}
+              // bucket={post.image.bucket}
+              // region={post.image.region}
+              // path={post.image.key}
               content={post.content}
               likes={post.likes}
               username={username.current}

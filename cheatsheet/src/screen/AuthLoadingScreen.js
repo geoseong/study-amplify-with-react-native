@@ -26,7 +26,11 @@ const AuthLoadingScreen = props => {
     })
     .catch(err => {
       console.log('error', err);
-      setError('An Error occurred. please restart the app');
+      if (err === 'not authenticated') {
+        navigation.navigate('Main');
+      } else {
+        setError('An error occurred. please restart the app.');
+      }
     });
   return (
     <>
