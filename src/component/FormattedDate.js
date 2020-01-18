@@ -1,7 +1,5 @@
-import { Text, View } from 'react-native';
-
 import React from 'react';
-import styles from '../style';
+import { Text } from 'react-native';
 
 const digitFiller = digit => {
   const nDigit = Number(digit);
@@ -19,7 +17,6 @@ const FormattedDate = ({ date, format }) => {
   const _second = dt.getSeconds();
   if (format === 'yyyymmdd') {
     return (
-      // <View style={styles.contentBetweenAlignCenter}>
       <>
         <Text>
           {_year}.{digitFiller(_month)}.{digitFiller(_date)}

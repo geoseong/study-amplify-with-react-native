@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
   screenTopLine: {
     padding: 10,
-    backgroundColor: 'orange',
+    backgroundColor: '#FFC46D',
   },
   flex: {
     flex: 1,

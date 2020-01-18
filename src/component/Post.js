@@ -20,16 +20,16 @@ const Post = ({
   updatedAt,
 }) => {
   const [imageUrl, setImageUrl] = useState(null);
-  console.log('Post props', {
-    id,
-    bucket,
-    region,
-    path,
-    content,
-    likes,
-    author,
-    updatedAt,
-  });
+  // console.log('Post props', {
+  //   id,
+  //   bucket,
+  //   region,
+  //   path,
+  //   content,
+  //   likes,
+  //   author,
+  //   updatedAt,
+  // });
   useEffect(() => {
     // setLikes(likes);
     Storage.get(path)

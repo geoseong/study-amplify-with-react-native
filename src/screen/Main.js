@@ -18,16 +18,22 @@ import {
 import { listPosts } from '../graphql/queries';
 import styles from '../style';
 
+const getDt = date => {
+  const transformedDt = isNaN(date) ? date : Number(date)
+  return new Date(transformedDt);
+}
 const Main = props => {
   const { navigation } = props;
   const [posts, setPosts] = useState([]);
   const [refresh, setRefresh] = useState([]);
   const username = useRef(navigation.getParam('username', ''))
-  console.warn('Main props', props)
   useEffect(() => {
     API.graphql(graphqlOperation(listPosts)).then(postList => {
       const { listPosts } = postList.data;
-      if (listPosts) {
+      if (listPosts && listPosts.items) {
+        listPosts.items.sort((a, b) => {
+          return getDt(a.createdAt) < getDt(b.createdAt)
+        })
         setPosts(listPosts.items);
       }
     });

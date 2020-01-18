@@ -9,7 +9,7 @@ Amplify.configure(config);
 const AppContainer = createAppContainer(SwitchNav);
 
 global.Buffer = global.Buffer || require('buffer').Buffer;
-// window.LOG_LEVEL = 'DEBUG';
+window.LOG_LEVEL = 'DEBUG';
 
 /**
  * @name error_process_subscription_long_period_time
