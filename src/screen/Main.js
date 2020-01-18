@@ -102,7 +102,7 @@ const Main = props => {
               path={post.image.key}
               content={post.content}
               likes={post.likes}
-              setPosts={setPosts}
+              username={username.current}
               createdAt={post.createdAt}
               updatedAt={post.updatedAt}
             />

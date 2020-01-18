@@ -1,4 +1,4 @@
-import { API, Storage, graphqlOperation } from 'aws-amplify';
+import { API, Analytics, Storage, graphqlOperation } from 'aws-amplify';
 import { Image, Text, View } from 'react-native';
 import React, { memo, useEffect, useRef, useState } from 'react';
 
@@ -15,7 +15,7 @@ const Post = ({
   content,
   likes,
   author,
-  setPosts,
+  username,
   createdAt,
   updatedAt,
 }) => {
@@ -48,8 +48,13 @@ const Post = ({
         input: incrementedLike,
       }),
     );
-    console.log('setLike likeRes', likeRes);
-    // setLikes(likeRes.data.updatePost.likes);
+    Analytics.record({
+      name: 'like',
+      attributes: { 
+        id,
+        username,
+       }
+    });
   };
 
   return (

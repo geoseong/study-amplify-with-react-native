@@ -29,5 +29,11 @@
 			"service": "S3",
 			"providerPlugin": "awscloudformation"
 		}
+	},
+	"analytics": {
+		"justapp": {
+			"service": "Pinpoint",
+			"providerPlugin": "awscloudformation"
+		}
 	}
 }

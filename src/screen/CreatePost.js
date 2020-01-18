@@ -1,6 +1,12 @@
 import * as ImagePicker from 'expo-image-picker';
 
-import Amplify, { API, Auth, Storage, graphqlOperation } from 'aws-amplify';
+import Amplify, {
+  API,
+  Analytics,
+  Auth,
+  Storage,
+  graphqlOperation,
+} from 'aws-amplify';
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -20,7 +26,7 @@ import {
 import { InputBoxPost, SubmitBtn } from '../component';
 import React, { useEffect, useState } from 'react';
 
-import { NavigationActions } from 'react-navigation';
+// import { NavigationActions } from 'react-navigation';
 import config from '../aws-exports';
 import { createPost } from '../graphql/mutations';
 import styles from '../style';
@@ -60,29 +66,26 @@ const CreatePost = props => {
   const submitEvt = async () => {
     const loginUser = await Auth.currentAuthenticatedUser();
     console.log('## submitEvt', { image, content });
-    let required = []
-    let isError = false
+    let required = [];
+    let isError = false;
     if (!image || !image.uri) {
-      isError = true
-      required.push('UPLOAD IMAGE')
+      isError = true;
+      required.push('UPLOAD IMAGE');
     }
     if (!content || content.length === 0) {
-      isError = true
-      required.push('WRITE CONTENT')
+      isError = true;
+      required.push('WRITE CONTENT');
     }
     if (isError) {
       setErrorMsg('YOU SHOULD ' + required.join(' / ') + ' !!');
-      return
+      return;
     }
     const splittedImgPath = image.uri.split('/');
     const filename = splittedImgPath[splittedImgPath.length - 1];
-    const imgObj = await fetch(image.uri)
-    const buffer = await imgObj.blob()
+    const imgObj = await fetch(image.uri);
+    const buffer = await imgObj.blob();
     /* storage putitem */
-    const storagePutRes = await Storage.put(
-      filename,
-      buffer,
-    );
+    const storagePutRes = await Storage.put(filename, buffer);
     console.log('## submitEvt storagePutRes', storagePutRes);
     /* appsync mutation */
     const nowDt = new Date().getTime();
@@ -100,13 +103,20 @@ const CreatePost = props => {
     };
     const postRes = await API.graphql(graphqlOperation(createPost, { input }));
     console.log('## submitEvt postRes', postRes);
+    /* Analytics */
+    Analytics.record({
+      name: 'posting',
+      attributes: {
+        username: loginUser.username,
+       }
+    });
     // TODO: 포스팅 추가 후에 navigation 뒤로 갔을 때 list query를 한 번 더 불러오게 한다
-    /* history.back */
     // const setParamsAction = NavigationActions.setParams({
     //   params: { refresh: true },
     //   key: 'Main',
     // });
     // navigation.dispatch(setParamsAction);
+    /* navigation history.back */
     navigation.goBack();
   };
 
@@ -151,7 +161,11 @@ const CreatePost = props => {
                   styles.pr1,
                 ]}
               >
-                {errorMsg.length > 0 && <Text style={{ color: 'red', marginRight: 10 }}>{errorMsg}</Text>}
+                {errorMsg.length > 0 && (
+                  <Text style={{ color: 'red', marginRight: 10 }}>
+                    {errorMsg}
+                  </Text>
+                )}
                 <SubmitBtn submitEvt={submitEvt} />
               </View>
             </View>

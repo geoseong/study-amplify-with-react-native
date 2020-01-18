@@ -54,7 +54,7 @@
     ```sh
     $ yarn add react-navigation-stack @react-native-community/masked-view
     ```
-3. Expo Debugging
+1. Expo Debugging
       ```sh
       expo start --android
       ```
@@ -96,7 +96,7 @@
 
     Your project has been successfully initialized and connected to the cloud!
     ```
-2. amplify add api
+1. amplify add api
    - authorization type: `API key`
    - edit `schema.graphql` with `@model` directive
     ```
@@ -140,9 +140,9 @@
       Edit your schema at /Users/{your path}/JustApp/amplify/backend/api/justapp/schema.graphql or place .graphql files in a directory at /Users/{your path}/JustApp/amplify/backend/api/justapp/schema
       Successfully added resource justapp locally
       ```
-3. amplify mocking and testing
+1. amplify mocking and testing
    - insert some data with using GraphQL's `mutation` query
-4. install **amplify framework**
+1. install **amplify framework**
     - cli
     ```
     $ yarn add aws-amplify
@@ -155,7 +155,7 @@
 
     Amplify.configure(config);
     ```
-5. make `/src` folder and coding
+1. make `/src` folder and coding
    - `/src/component`
    - `/src/style`
    - `/src/screen`
@@ -167,7 +167,7 @@
        - AuthLoading: **AuthLoadingScreen.js**
        - Main: **Stack Navigator**
        - Auth: **Auth.js**
-6. add code **Amplify's** `API` Moule in expo
+1. add code **Amplify's** `API` Moule in expo
    - amplify add codegen
       ```
       $ amplify add codegen
@@ -179,13 +179,15 @@
       ✔ Generated GraphQL operations successfully and saved at src/graphql
       ```
    - import `API` and code with created `AppSync API`
-7. execute `amplify mock` & `expo start`
-   - get connection between `amplify's localhost api` and `expo debugging`
-8. modify `amplify framework's API` code in `expo`
+1. execute `amplify mock` & `expo start`
+   - make sure to get connection between `amplify's localhost api` and `expo debugging`
+1. modify `amplify framework's API` code in `expo`
    - mutation, subscription
    - or query, mutation only
    - because amplify mock doesn't support subscription
-9. re-configure graphql query `maximum statement depth`
+     - [github issue 1](https://github.com/aws-amplify/amplify-cli/issues/2935#issuecomment-563372044)
+     - [github issue 2](https://github.com/aws-amplify/amplify-cli/issues/3008#issuecomment-566301536)
+1. re-configure graphql query `maximum statement depth`
     ```
     $ amplify configure codegen
 
@@ -199,8 +201,8 @@
     ✔ Generated GraphQL operations successfully and saved at src/graphql
     ```
 
-10. amplify add auth
-    - add auth via Amplify CLI
+1. amplify add auth
+    - add `auth` via Amplify CLI
       ```
       $ amplify add auth
       
@@ -231,7 +233,7 @@
         updatedAt: AWSTimestamp!
       }
       ```
-11. amplify update api
+1. amplify update api
     - Change authorization type `API Key` -> `Amazon Cognito User Pool`
     - and updated schema to type Amplify CLI
       ```
@@ -243,7 +245,7 @@
 
       $ amplify codegen
       ```
-12. amplify mock
+1. amplify mock
     - deploy `Auth` resource to AWS Cloud
     - check added `cognito_user_pool` Auth Type in Amplify's API Mock console
     ```
@@ -257,11 +259,13 @@
     | Auth     | justappf8f30b2f | Create    | awscloudformation |
     ? Are you sure you want to continue? "Yes"
     ```
-13. import Amplify's `Auth` module in expo
+1. import Amplify's `Auth` module in expo
     - using `withAuthenticator`
-14. amplify add storage
+1. amplify add storage
     - add storage resource via Amplify's CLI
       ```
+      $ admplif add storage
+
       ? Please select from one of the below mentioned services: "Content (Images, audio, video, etc.)"
       ? Please provide a friendly name for your resource that will be used to label this category in the project: "justappstorage"
       ? Please provide bucket name: "justappstorage"
@@ -269,6 +273,8 @@
       ? What kind of access do you want for Authenticated users? "create/update, read, delete"
       ? What kind of access do you want for Guest users? "read"
       ? Do you want to add a Lambda Trigger for your S3 Bucket? "No"
+
+      $ amplify push storage
       ```
     - add type `S3Object` in `schema.graphql`
       ```gql
@@ -302,18 +308,37 @@
       $ amplify api update
       $ amplify codegen
       ```
-15. import Amplify's `Storage` in expo
+1.  import Amplify's `Storage` in expo
     - install & coding with `expo-image-picker`
       ```
         $ expo install expo-image-picker
       ```
-16. check likes count with Amplify `API`'s `subscription`
-17. login in app and add post
+1.  check likes count with Amplify `API`'s `subscription`
+1. login in app and add post
     - amplify mock & expo start
-18. amplify add analytics
-    - expo에서 analytics import해서 코딩하기
-19. expo start & check analytics on AWS console
-20. amplify delete
+1. push amplify's resouces
+    ```
+    $ amplify push
+    ```
+1. amplify add analytics
+    - add analytics resouce via Amplify's CLI
+      ```
+      $ amplify add analytics
+      Scanning for plugins...
+      Plugin scan successful
+      Using service: Pinpoint, provided by: awscloudformation
+      ? Provide your pinpoint resource name: "justapp"
+      Adding analytics would add the Auth category to the project if not already added.
+      ? Apps need authorization to send analytics events. Do you want to allow guests and un
+      authenticated users to send analytics events? (we recommend you allow this when gettin
+      g started) "Yes"
+
+      $ amplify push analytics
+      ```
+    - import Amplify's `Analytics` module in expo
+1.  expo start & check analytics on AWS console
+1.  amplify delete
+
 
 ## Build Standalone App
 
