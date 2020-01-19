@@ -129,27 +129,27 @@
     Your project has been successfully initialized and connected to the cloud!
     ```
 10. amplify add api
-   - authorization type: `API key`
-   - edit `schema.graphql` with `@model` directive
-    ```
-    $ amplify add api
+    - authorization type: `API key`
+    - edit `schema.graphql` with `@model` directive
+      ```
+      $ amplify add api
 
-    ? Please select from one of the below mentioned services: GraphQL
-    ? Provide API name: "justapp"
-    ? Choose the default authorization type for the API "API key"
-    ? Enter a description for the API key: ""
-    ? After how many days from now the API key should expire (1-365): "7"
-    ? Do you want to configure advanced settings for the GraphQL API "No, I am done."
-    ? Do you have an annotated GraphQL schema? "No"
-    ? Do you want a guided schema creation? "Yes"
-    ? What best describes your project: "One-to-many relationship (e.g., “Blogs” with “Posts” and “Comments”)"
-    ? Do you want to edit the schema now? (Y/n) "Y"
+      ? Please select from one of the below mentioned services: GraphQL
+      ? Provide API name: "justapp"
+      ? Choose the default authorization type for the API "API key"
+      ? Enter a description for the API key: ""
+      ? After how many days from now the API key should expire (1-365): "7"
+      ? Do you want to configure advanced settings for the GraphQL API "No, I am done."
+      ? Do you have an annotated GraphQL schema? "No"
+      ? Do you want a guided schema creation? "Yes"
+      ? What best describes your project: "One-to-many relationship (e.g., “Blogs” with “Posts” and “Comments”)"
+      ? Do you want to edit the schema now? (Y/n) "Y"
 
-    Please edit the file in your editor: "/Users/{your path}/JustApp/amplify/backend/api/justapp/schema.graphql"
+      Please edit the file in your editor: "/Users/{your path}/JustApp/amplify/backend/api/justapp/schema.graphql"
 
-    ? Press enter to continue 
-    ```
-   - schema.graphql
+      ? Press enter to continue 
+      ```
+    - schema.graphql
       ```gql
       type Post @model {
         id: ID!
@@ -160,8 +160,7 @@
         updatedAt: String!
       }
       ```
-
-    - press `Enter` Key in cli and creating `API`'s step continues...
+    - press `Enter` Key in cli and creating `API`'s step continues
       ```
       The following types do not have '@auth' enabled. Consider using @auth with @model
           - Post
@@ -174,38 +173,38 @@
       ```
 11. amplify mocking and testing
     - running Amplify CLI `amplify mock`
-    ```
-    $ amplify mock
+      ```
+      $ amplify mock
 
-    ? Choose the code generation language target "javascript"
-    ? Enter the file name pattern of graphql queries, mutations and subscriptions "src/graphql/**/*.js"
-    ? Do you want to generate/update all possible GraphQL operations - queries, mutations and subscriptions "Yes"
-    ? Enter maximum statement depth [increase from default if your schema is deeply nested] "2"
-    ✔ Generated GraphQL operations successfully and saved at src/graphql
-    AppSync Mock endpoint is running at http://xxxxx:20002
-    ```
+      ? Choose the code generation language target "javascript"
+      ? Enter the file name pattern of graphql queries, mutations and subscriptions "src/graphql/**/*.js"
+      ? Do you want to generate/update all possible GraphQL operations - queries, mutations and subscriptions "Yes"
+      ? Enter maximum statement depth [increase from default if your schema is deeply nested] "2"
+      ✔ Generated GraphQL operations successfully and saved at src/graphql
+      AppSync Mock endpoint is running at http://xxxxx:20002
+      ```
     - insert some data with using GraphQL's `mutation` query
-9.  install **amplify framework**
+12. install **amplify framework**
     - cli
-    ```
-    $ yarn add aws-amplify
-    $ yarn add aws-amplify-react-native
-    ```
+      ```
+      $ yarn add aws-amplify
+      $ yarn add aws-amplify-react-native
+      ```
     - App.js
-    ```js
-    import Amplify from 'aws-amplify';
-    import config from './src/aws-exports’;
+      ```js
+      import Amplify from 'aws-amplify';
+      import config from './src/aws-exports’;
 
-    Amplify.configure(config);
-    ```
-10. modify `amplify framework's API` code in `expo`
+      Amplify.configure(config);
+      ```
+13. modify `amplify framework's API` code in `expo`
     - query, mutation
     - **amplify mock** doesn't support subscription
       - [github issue 1](https://github.com/aws-amplify/amplify-cli/issues/2935#issuecomment-563372044)
       - [github issue 2](https://github.com/aws-amplify/amplify-cli/issues/3008#issuecomment-566301536)
-11. execute `amplify mock` & `expo start --android`
+14. execute `amplify mock` & `expo start --android`
     - make sure to get connection between `amplify's localhost api` and `expo debugging`
-12. amplify add auth
+15. amplify add auth
     - add `auth` via Amplify CLI
       ```
       $ amplify add auth
@@ -236,7 +235,7 @@
         updatedAt: String!
       }
       ```
-14. amplify update api
+16. amplify update api
     - Change authorization type `API Key` -> `Amazon Cognito User Pool`
     - and updated schema to type Amplify CLI
       ```
@@ -246,7 +245,7 @@
       Use a Cognito user pool configured as a part of this project.
       ? Do you want to configure advanced settings for the GraphQL API "No, I am done."
       ```
-15. amplify mock
+17. amplify mock
     - deploy `Auth` resource to AWS Cloud
     - check added `cognito_user_pool` Auth Type in Amplify's API Mock console
     ```
@@ -260,7 +259,7 @@
     | Auth     | justappf8f30b2f | Create    | awscloudformation |
     ? Are you sure you want to continue? "Yes"
     ```
-16. import Amplify's `Auth` module in expo
+18. import Amplify's `Auth` module in expo
     - `navigator/stack.js`
       - wrap StackNav component with `withAuthenticator`
         ```js
@@ -268,7 +267,7 @@
         ```
       - add SignOut event
     - add `Auth` module at `screen/AuthLoadingScreen.js`
-17. amplify add storage
+19. amplify add storage
     - add storage resource via Amplify's CLI and push storage
       ```
       $ admplif add storage
@@ -310,7 +309,7 @@
       $ amplify api update
       $ amplify codegen
       ```
-18. re-configure graphql query `maximum statement depth`
+20. re-configure graphql query `maximum statement depth`
     - before doing this, check out the `cheatsheet/src/graphql/queries.js` file and see GraphQL query's statement depth
     - after `amplify configure codegen` process, check out the GraphQL query's statement depth again.
     ```
@@ -325,21 +324,21 @@
     $ amplify codegen
     ✔ Generated GraphQL operations successfully and saved at src/graphql
     ```
-19. push amplify's resouces
+21. push amplify's resouces
     ```
     $ amplify push
     ```
-20. modify Amplify's code in expo
+22. modify Amplify's code in expo
     - add checking likes count with Amplify `API`'s `subscription` query in useEffect in `src/screen/Main.js`
     - uncomment `bucket/region/path` of `<Post />` in `src/screen/Main.js`
     - add Amplify's mutation in `src/component/Post.js`
-21. run `expo start --android` and 
+23. run `expo start --android` and 
     - sign up & sign in app
     - add post
     - click 'like' button
     - check 'likes' value changes with `subscription query`
       - modify likes data in `AWS AppSync Web Console`
-22. amplify add analytics
+24. amplify add analytics
     - add analytics resouce via Amplify's CLI and push analytics
       ```
       $ amplify add analytics
@@ -355,8 +354,8 @@
       $ amplify push analytics
       ```
     - import Amplify's `Analytics` module in expo
-23. expo start & check analytics on AWS console
-24. amplify delete
+25. expo start & check analytics on AWS console
+26. amplify delete
 
 ## Build Standalone App
 
