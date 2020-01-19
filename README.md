@@ -12,6 +12,8 @@
   - configure AWS Account via [`aws configure` cli](https://github.com/aws/aws-cli#getting-started)
 
 ## Step
+> You also can see the tutorial videos recorded [here](https://drive.google.com/drive/folders/14lyN2MaecQ2_69_PJQO7LPSlGPNlFjSO?usp=sharing)
+
 1. `$ expo init`
    1. select `blank` in `Managed workflow`
    2. enter the project's `name` and `slug`. you can type `Tab` and `Shift + Tab` key to switch the cursor
@@ -52,43 +54,43 @@
       cd JustApp
       yarn start
     ```
-1. install `react-navigation`
+2. install `react-navigation`
     ```sh
     $ expo install react-navigation react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context
     ```
-1. install `react-navigation-stack` for Stack Navigation
+3. install `react-navigation-stack` for Stack Navigation
     ```sh
     $ yarn add react-navigation-stack @react-native-community/masked-view
     ```
-2. install `expo-image-picker`
+4. install `expo-image-picker`
     ```
     $ expo install expo-image-picker
     ```
-1. install `buffer`
+5. install `buffer`
     ```
     $ yarn add buffer
     ```
-2. clone the repository to other place and copy `src` folder and overwrite `App.js`
+6. clone the repository to other place and copy `src` folder and overwrite `App.js`
     ```
     $ cd ../
     $ git clone https://github.com/geoseong/study-amplify-with-react-native.git
     $ cp -r handson/src ../JustApp/src
     $ cp handson/App.js ../JustApp/App.js 
     ```
-3. check out navigation's structure
+7. check out navigation's structure
      - Stack Navigator: `stack.js`
        - Main: **Main.js**
        - CreatePost: **CreatePost.js**
      - Switch Navigator: `switch.js`
        - AuthLoading: **AuthLoadingScreen.js**
        - StackNav: **Stack Navigator**
-4. Expo Debugging
+8. Expo Debugging
       ```sh
       $ expo start --android
       or
       $ yarn android
       ```
-5. amplify init
+9. amplify init
     ```
     $ amplify init
 
@@ -126,7 +128,7 @@
 
     Your project has been successfully initialized and connected to the cloud!
     ```
-6. amplify add api
+10. amplify add api
    - authorization type: `API key`
    - edit `schema.graphql` with `@model` directive
     ```
@@ -170,7 +172,7 @@
       Edit your schema at /Users/{your path}/JustApp/amplify/backend/api/justapp/schema.graphql or place .graphql files in a directory at /Users/{your path}/JustApp/amplify/backend/api/justapp/schema
       Successfully added resource justapp locally
       ```
-8. amplify mocking and testing
+11. amplify mocking and testing
     - running Amplify CLI `amplify mock`
     ```
     $ amplify mock
@@ -203,7 +205,7 @@
       - [github issue 2](https://github.com/aws-amplify/amplify-cli/issues/3008#issuecomment-566301536)
 11. execute `amplify mock` & `expo start --android`
     - make sure to get connection between `amplify's localhost api` and `expo debugging`
-13. amplify add auth
+12. amplify add auth
     - add `auth` via Amplify CLI
       ```
       $ amplify add auth
