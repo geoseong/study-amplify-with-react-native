@@ -1,5 +1,8 @@
 <!-- markdownlint-disable -->
 # AWSKRUG Community Day 2020 Amplify Demo
+
+<img src="https://user-images.githubusercontent.com/19166187/72676937-076bac80-3ada-11ea-807a-62fea7355de6.jpeg" width="300" />
+
 ## Prerequisites
   - install [node.js](https://nodejs.org/ko/download/package-manager/)
   - install [yarn](https://yarnpkg.com/lang/en/docs/install/#mac-stable)
@@ -256,10 +259,12 @@
     ? Are you sure you want to continue? "Yes"
     ```
 16. import Amplify's `Auth` module in expo
-    - wrap StackNav component with `withAuthenticator`
-      ```js
-        export default withAuthenticator(StackNav);
-      ```
+    - `navigator/stack.js`
+      - wrap StackNav component with `withAuthenticator`
+        ```js
+          export default withAuthenticator(StackNav);
+        ```
+      - add SignOut event
     - add `Auth` module at `screen/AuthLoadingScreen.js`
 17. amplify add storage
     - add storage resource via Amplify's CLI and push storage
@@ -350,7 +355,6 @@
     - import Amplify's `Analytics` module in expo
 23. expo start & check analytics on AWS console
 24. amplify delete
-
 
 ## Build Standalone App
 
