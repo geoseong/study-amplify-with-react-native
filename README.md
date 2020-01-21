@@ -361,8 +361,11 @@
 
 ### Reference
 [Building Standalone Apps](https://docs.expo.io/versions/v36.0.0/distribution/building-standalone-apps/)
+- [If you choose to build for Android](https://docs.expo.io/versions/v36.0.0/distribution/building-standalone-apps/#if-you-choose-to-build-for-android)
+- [If you choose to build for iOS](https://docs.expo.io/versions/v36.0.0/distribution/building-standalone-apps/#if-you-choose-to-build-for-ios)
 
 ### Step
+#### Android
 - add prop in `app.json`
   ```json
     "android": {
@@ -371,3 +374,35 @@
   ```
 - `expo build:android -t apk`
 - `expo fetch:android:keystore` and backup your keystore to a safe location
+
+#### iOS
+- add prop in `app.json`
+  ```json
+    "ios": {
+      "bundleIdentifier": "com.awskrug.justapp",
+    }
+  ```
+- `expo build:ios`
+  - You are given a choice of letting the Expo client create the necessary credentials for you, while still having a chance to provide your own overrides. Your Apple ID and password are used locally and never saved on Expo's servers.
+  ```
+  $ expo build:ios
+  [16:44:37] Checking if current build exists...
+
+  [16:44:37] No currently active or previous builds for this project.
+  [16:44:37]
+  We need your Apple ID/password to manage certificates, keys
+  and provisioning profiles from your Apple Developer account.
+
+  Note: Expo does not keep your Apple ID or your Apple ID password.
+
+  ? What's your Apple ID? xxx@yyy.zzz
+  ? Password? [hidden]
+  ✔ Authenticated with Apple Developer Portal successfully!
+  [16:44:46] You have 4 teams associated with your account
+  ? Which team would you like to use? 3) ABCDEFGHIJ "John Turtle" (Individual)
+  ✔ Ensured App ID exists on Apple Developer Portal!
+  [16:44:59] We do not have some credentials for you: Apple Distribution Certificate, Apple Push Notifications service key, Apple Provisioning Profile
+  ? How would you like to upload your credentials? (Use arrow keys)
+  ❯ Expo handles all credentials, you can still provide overrides
+    I will provide all the credentials and files needed, Expo does limited validation
+  ```
