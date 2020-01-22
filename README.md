@@ -3,6 +3,9 @@
 
 <img src="https://user-images.githubusercontent.com/19166187/72676937-076bac80-3ada-11ea-807a-62fea7355de6.jpeg" width="300" />
 
+## KeyNote
+[AWSKRUG Community Day Seoul 2020 - Amplify with React-Native(Koean)](https://www.slideshare.net/awskr/aws-community-day-2020-amplify)
+
 ## Prerequisites
   - install [node.js](https://nodejs.org/ko/download/package-manager/)
   - install [yarn](https://yarnpkg.com/lang/en/docs/install/#mac-stable)
