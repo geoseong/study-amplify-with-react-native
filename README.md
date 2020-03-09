@@ -15,7 +15,8 @@
   - configure AWS Account via [`aws configure` cli](https://github.com/aws/aws-cli#getting-started)
 
 ## Step
-> You can read this 'Step' below with watching the recorded tutorial videos [here](https://drive.google.com/drive/folders/14lyN2MaecQ2_69_PJQO7LPSlGPNlFjSO?usp=sharing) to make this instructions understandable
+- You can read this 'Step' below with watching the recorded tutorial videos to make this instructions understandable
+  - [Full Series of Tutorial video](https://drive.google.com/drive/folders/14lyN2MaecQ2_69_PJQO7LPSlGPNlFjSO?usp=sharing)
 
 1. `$ expo init`
    1. select `blank` in `Managed workflow`
